@@ -69,7 +69,7 @@ body {
     <main class="main">
       <div class="ctas">
         <!-- candidate -->
-        <a href="/candidate/home" class="primary" rel="noopener noreferrer">
+        <a href="/home" class="primary" rel="noopener noreferrer">
           <b>कारीगर</b>
         </a>
         <!-- employee -->
