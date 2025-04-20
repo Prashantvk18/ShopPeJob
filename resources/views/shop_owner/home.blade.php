@@ -1,4 +1,4 @@
-@include('candidate.header')
+@include('shop_owner.header')
 <div id="mainCarousel" class="carousel slide mt-0" data-bs-ride="carousel" data-bs-interval="3000">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -23,4 +23,4 @@
   </button>
 </div>
 
-@include('candidate.footer')
+@include('shop_owner.footer')

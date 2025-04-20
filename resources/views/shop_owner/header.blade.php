@@ -55,13 +55,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/shome">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ticketview">Job</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/viewdocument">Applied Job</a>
+                    <a class="nav-link" href="/viewdocument">Created Job</a>
                 </li>]
                 <!-- Dropdown Menu -->
                 <!-- <li class="nav-item dropdown">
@@ -79,7 +76,7 @@
                     <a class="nav-link" href="/logout">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">SignIn/SignUp</a>
+                    <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
         </div>

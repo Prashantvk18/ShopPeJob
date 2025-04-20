@@ -73,7 +73,7 @@ body {
           <b>कारीगर</b>
         </a>
         <!-- employee -->
-        <a href="/Auth/SignIn" class="primary" rel="noopener noreferrer">
+        <a href="/shome" class="primary" rel="noopener noreferrer">
           <b>दुकानदार</b>
         </a>
       </div>

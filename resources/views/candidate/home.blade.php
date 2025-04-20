@@ -1,4 +1,15 @@
 @include('candidate.header')
+<style>
+  #mainCarousel {
+  height: 70vh; /* 40% of the viewport height */
+}
+
+#mainCarousel .carousel-item img {
+  height: 70vh;
+  object-fit: cover;
+  width: 100%;
+}
+</style>
 <div id="mainCarousel" class="carousel slide mt-0" data-bs-ride="carousel" data-bs-interval="3000">
   <div class="carousel-inner">
     <div class="carousel-item active">

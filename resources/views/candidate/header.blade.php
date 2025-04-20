@@ -60,9 +60,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/ticketview">Job</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/viewdocument">Applied Job</a>
-                </li>]
+               
+                @if(Session::get('is_loggedIn'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewdocument">Applied Job</a>
+                    </li>
+                @endif
                 <!-- Dropdown Menu -->
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,9 +81,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">About Us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">LogIn</a>
-                </li>
+                @if(Session::get('is_loggedIn'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>  
+                @else
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="/login">LogIn</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
