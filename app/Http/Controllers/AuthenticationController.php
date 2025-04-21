@@ -49,7 +49,12 @@ class AuthenticationController extends Controller
       // }
 
       $user = User::where('number', $request->mobile)->first();
-      if ($user) {
+      if (!$user) {
+         $user_data = new User();
+         $user_data->number = $request->mobile;
+         $user_data->save();
+         $user = User::where('number', $request->mobile)->first();
+      }
          Auth::login($user);
          if ($user->is_active == 1) {
             Session::put('is_loggedIn', 1);
@@ -60,11 +65,7 @@ class AuthenticationController extends Controller
             \Auth::logout();  // Optionally log out the user
             return redirect('/')->withError('Inactive User');
          }
-      } else {
-         $user_data = new User();
-         $user_data->number = $request->mobile;
-         $user_data->save();
-      }
+      
 
       return redirect('/')->withError('Invalid Credential');
    }

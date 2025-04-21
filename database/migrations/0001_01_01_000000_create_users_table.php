@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('mobile')->unique();
+            $table->string('number')->unique();
             $table->string('is_active')->default(1);
             $table->string('is_admin')->default(0);
             $table->rememberToken();

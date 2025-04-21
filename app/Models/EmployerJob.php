@@ -24,5 +24,6 @@ class EmployerJob extends Model
         'phone_number',
         'food_allowance',
         'travel_allowance',
+        'created_by'
     ];
 }

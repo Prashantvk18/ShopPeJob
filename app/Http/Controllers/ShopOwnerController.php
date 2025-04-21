@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\State;
 use App\Models\City;
 use App\Models\EmployerBond;
+use App\Models\EmployerJob;
 use App\Models\JobCategory;
 
 class ShopOwnerController extends Controller
 {
     public function home()
-    {
-        return view('shop_owner.home');
+    {   
+        $user = \Auth::user();
+        $job_data = EmployerJob::where('created_by' , $user->id)->where('is_delete' , 0)->get();
+        return view('shop_owner.home',['job_data' => $job_data]);
     }
     public function createjob()
     {
@@ -26,6 +29,7 @@ class ShopOwnerController extends Controller
     }
     public function storeJob(Request $request)
     {
+        $user = \Auth::user();
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'state' => 'required|integer',
@@ -45,9 +49,15 @@ class ShopOwnerController extends Controller
             'food_allowance' => 'nullable|boolean',
             'travel_allowance' => 'nullable|boolean',
         ]);
+        
+        $validated['created_by'] = $user->id;
 
         // Store job logic here (e.g., Job::create($validated);)
         EmployerJob::create($validated);
         return redirect()->route('createjob')->with('message', 'Job posted successfully.');
+    }
+
+    public function job_status(){
+        
     }
 }
