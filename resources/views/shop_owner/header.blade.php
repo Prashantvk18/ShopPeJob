@@ -58,7 +58,7 @@
                     <a class="nav-link active" aria-current="page" href="/shome">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/viewdocument">Created Job</a>
+                    <a class="nav-link" href="/createjob">Created Job</a>
                 </li>]
                 <!-- Dropdown Menu -->
                 <!-- <li class="nav-item dropdown">
