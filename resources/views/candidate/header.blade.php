@@ -79,6 +79,9 @@
                     </ul>
                 </li>  -->
                 <li class="nav-item">
+                    <a class="nav-link" href="/candidate_profile">Profile</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/logout">About Us</a>
                 </li>
                 @if(Session::get('is_loggedIn'))
