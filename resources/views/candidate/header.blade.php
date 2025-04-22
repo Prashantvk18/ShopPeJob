@@ -58,7 +58,7 @@
                     <a class="nav-link active" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ticketview">Job</a>
+                    <a class="nav-link" href="/jobs">Job</a>
                 </li>
                
                 @if(Session::get('is_loggedIn'))
@@ -79,7 +79,7 @@
                     </ul>
                 </li>  -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">About Us</a>
+                    <a class="nav-link" href="/about_us">About Us</a>
                 </li>
                 @if(Session::get('is_loggedIn'))
                     <li class="nav-item">
@@ -97,9 +97,7 @@
 
 <!-- Additional Styles -->
 <style>
-    /* Navbar improvements */
-
-   
+    /* Navbar improvements */   
     .navbar {
         background-color: black !important;
         padding: 10px 0;

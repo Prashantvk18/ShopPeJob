@@ -57,7 +57,11 @@ class ShopOwnerController extends Controller
         return redirect()->route('createjob')->with('message', 'Job posted successfully.');
     }
 
-    public function job_status(){
+    public function job_status(Request $request){
         
+        $job_status = EmployerJob::where('id' , $request->id)->first();
+        $job_status->is_publish = $request->status == 'true' ? 1 : 0 ;
+        $job_status->save();
+        return response()->json(['message' => 'Form submitted successfully']);
     }
 }

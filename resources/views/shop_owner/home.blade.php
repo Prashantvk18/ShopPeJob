@@ -49,6 +49,11 @@ data-bs-interval="3000">
     @foreach($job_data as $job)
       <div class="col-md-4">
         <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
+        <!-- Edit Button (top-right corner) -->
+        <a href="" class="btn btn-sm btn-outline-secondary position-absolute" 
+             style="top: 10px; right: 10px; z-index: 10;">
+            <i class="fa fa-pencil"></i> Edit
+          </a>
           <div class="card-body">
             <h5 class="card-title mb-3" style="font-size: 1.25rem; font-weight: 600;">
               <i class="fa fa-briefcase me-2 text-primary"></i> {{ $job->title }}
@@ -67,7 +72,7 @@ data-bs-interval="3000">
             </p>
             <div class="d-flex align-items-center justify-content-between mt-3">
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="verifiedSwitch{{ $job->id }}" onchange="updateJobStatus({{ $job->id }}, this.checked)">
+                <input class="form-check-input" type="checkbox" id="verifiedSwitch{{ $job->id }}" onchange="updateJobStatus({{ $job->id }}, this.checked)" @if($job->is_publish == 1) checked @endif>
                 <label class="form-check-label" for="verifiedSwitch{{ $job->id }}">Publish</label>
               </div>
               <div class="form-check form-switch">
@@ -93,6 +98,8 @@ data-bs-interval="3000">
 
 <script>
   function updateJobStatus(id , status){
+    console.log(id);
+    console.log(status);
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
