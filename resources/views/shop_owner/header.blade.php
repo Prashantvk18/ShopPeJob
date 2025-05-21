@@ -74,7 +74,7 @@
                     </ul>
                 </li>  -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">About Us</a>
+                    <a class="nav-link" href="/about_us">About Us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>

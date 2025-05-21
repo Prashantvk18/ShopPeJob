@@ -64,4 +64,8 @@ class ShopOwnerController extends Controller
         $job_status->save();
         return response()->json(['message' => 'Form submitted successfully']);
     }
+
+    public function about_us(){
+        return view('shop_owner.aboutus');
+    }
 }
