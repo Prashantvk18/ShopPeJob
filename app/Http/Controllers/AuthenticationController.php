@@ -10,23 +10,25 @@ use Illuminate\Support\Facades\Session;
 
 class AuthenticationController extends Controller
 {
-   public function login(){
+   public function login()
+   {
       return view('authentication.login');
    }
 
-   public function login_user(Request $request){
-      
+   public function login_user(Request $request)
+   {
+
       $request->validate([
          'mobile' => [
-             'required',
-             'regex:/^[6-9][0-9]{9}$/'
+            'required',
+            'regex:/^[6-9][0-9]{9}$/'
          ],
-     ], [
+      ], [
          'mobile.required' => 'Please enter your mobile number.',
          'mobile.regex' => 'Enter a valid 10-digit mobile number.',
-     ]);
+      ]);
 
-     
+
       // $last =  Session::get('last_loggedin');
       // Session::put('mobile_no' ,  $request->mobile_no);
       // $user = User::where('mobile_no' ,$request->mobile_no)->first();
@@ -46,33 +48,32 @@ class AuthenticationController extends Controller
       //     return redirect('/')->withError('No user Found');  
       // }
 
-      $user = User::where('mobile' , $request->mobile)->first();
-      if($user){
-         Auth::login($user);
-            if($user->is_active == 1){
-               Session::put('is_loggedIn' , 1);
-               Session::put('is_admin' , $user->is_admin);
-               return redirect('/');  
-            } 
-            else {
-                // User is not active
-                \Auth::logout();  // Optionally log out the user
-                return redirect('/')->withError('Inactive User');
-            }   
-        
-      }else{
+      $user = User::where('number', $request->mobile)->first();
+      if (!$user) {
          $user_data = new User();
          $user_data->number = $request->mobile;
          $user_data->save();
+         $user = User::where('number', $request->mobile)->first();
       }
+         Auth::login($user);
+         if ($user->is_active == 1) {
+            Session::put('is_loggedIn', 1);
+            Session::put('is_admin', $user->is_admin);
+            return redirect('/');
+         } else {
+            // User is not active
+            \Auth::logout();  // Optionally log out the user
+            return redirect('/')->withError('Inactive User');
+         }
+      
 
       return redirect('/')->withError('Invalid Credential');
-  }
-
-   public function logout() {
-      \Auth::logout();
-      session()->flush();
-      return redirect('/'); 
    }
 
+   public function logout()
+   {
+      \Auth::logout();
+      session()->flush();
+      return redirect('/');
+   }
 }
