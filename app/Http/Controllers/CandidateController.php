@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\EmployerJob;
 use App\Models\EmployerBond;
 use App\Models\State;
+use App\Models\City;
+use App\Models\JobCategory;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\CandidateProfile;
@@ -43,17 +45,28 @@ class CandidateController extends Controller
     }
 
     public function profilecreate()
-    {
-        return view('candidate.profile');
+    {   
+        $user = \Auth::user();
+        $profile_data = CandidateProfile::where('user_id' , $user->id)->first();
+        
+        return view('candidate.profile',[
+            'states' => State::all(),
+            'cities' => City::all(),
+            'jobCategories' => JobCategory::all(),
+            'profile_data'=>$profile_data ,
+            'mob_number' => $user->number
+        ]);
     }
 
     public function profilestore(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
+    {   
+        $user = \Auth::user();
+        
+        $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
-            'mobile_no' => 'required|string|max:15',
+            
             'dob' => 'required|string',
             'address' => 'required|string',
             'state' => 'required|string',
@@ -64,36 +77,28 @@ class CandidateController extends Controller
             'is_deleted' => 'nullable|boolean',
             'is_verify' => 'nullable|boolean',
         ]);
-        if ($validator->fails()) {
-            $errmsg_arr = [];
-            foreach($validator->errors()->all() as $val){
-                $errmsg_arr[] = $val;
-            }
-            $errmsg_str = implode(",",$errmsg_arr);
-            return response()->json(['errors' => $errmsg_str], 400);
-        }
-        $candidate = CandidateProfile::create([
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'last_name' => $request->last_name,
-            'mobile_no' => $request->mobile_no,
-            'dob' => $request->dob,
-            'address' => $request->address,
-            'state' => $request->state,
-            'salary_expect'=>'1000',
-            'gender' => 'M',
-            'city' => $request->city,
-            'education' => $request->education,
-            'work_experience' => $request->work_experience,
-            'looking_job' => $request->looking_job,
-           
-            'is_active' => $request->is_deleted ?? 0,
-            'is_verify' => $request->is_verify ?? 0,
+       
+
+       $candidate = CandidateProfile::updateOrCreate(
+            ['user_id' => $user->id],
+            ['user_id' => $user->id,
+             'first_name' => $request->first_name,
+             'middle_name' => $request->middle_name,
+             'last_name' => $request->last_name,
+             'mobile_no' => $user->number,
+             'dob' => $request->dob,
+             'address' => $request->address,
+             'state' => $request->state,
+             'salary_expect'=>$request->salary_expected,
+             'gender' => $request->gender,
+             'city' => $request->city,
+             'education' => $request->education,
+             'work_experience' => $request->work_experience,
+             'looking_job' => $request->looking_job,
+             'is_active' => $request->is_deleted ?? 0,
+             'is_verify' => $request->is_verify ?? 0,
         ]);
-        return response()->json([
-            'message' => 'Candidate Profile created successfully',
-            'data' => $candidate
-        ], 201);
+        return redirect()->route('profilecreate')->with('message', 'Profile Updated successfully.');
     }
 
 }

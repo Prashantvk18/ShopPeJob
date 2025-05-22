@@ -8,6 +8,8 @@
                 </div>
                 <div class="card-body">
 
+                    
+
                     @if(session('message'))
                     <div class="alert {{ str_contains(session('message'), 'successfully') ? 'alert-success' : 'alert-danger' }}">
                         {{ session('message') }}
@@ -16,11 +18,14 @@
 
                     <form method="POST" action="{{ route('store.job') }}">
                         @csrf
+                        @if($job_data)
+                        <input type="text" id="dataid" name="dataid" style="display:none" value="{{$job_data->id}}">
+                        @endif
 
                         {{-- Job Title --}}
                         <div class="mb-3">
                             <label for="title" class="form-label"><b>Job Title</b></label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
+                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title',$job_data->title ?? '') }}">
                             @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
@@ -36,7 +41,7 @@
                                         <select class="form-select @error('state') is-invalid @enderror" name="state">
                                             <option value="">Select State</option>
                                             @foreach($states as $state)
-                                            <option value="{{ $state->id }}" {{ old('state') == $state->id ? 'selected' : '' }}>
+                                            <option value="{{ $state->id }}" {{ old('state', $job_data->state ?? '') == $state->id ? 'selected' : '' }}>
                                                 {{ $state->name }}
                                             </option>
                                             @endforeach
@@ -51,7 +56,7 @@
                                             <option value="">Select City</option>
                                             {{-- You’ll need to dynamically populate based on selected state --}}
                                             @foreach($cities as $city)
-                                            <option value="{{ $city->name }}" {{ old('city') == $city->name ? 'selected' : '' }}>
+                                            <option value="{{ $city->name }}" {{ old('city', $job_data->city ?? '') == $city->name ? 'selected' : '' }}>
                                                 {{ $city->name }}
                                             </option>
                                             @endforeach
@@ -63,7 +68,7 @@
                                 {{-- Address --}}
                                 <div class="mb-3">
                                     <label for="address" class="form-label"><b>Address</b></label>
-                                    <textarea class="form-control @error('address') is-invalid @enderror" name="address">{{ old('address') }}</textarea>
+                                    <textarea class="form-control @error('address') is-invalid @enderror" name="address">{{ old('address',$job_data->address ?? '') }}</textarea>
                                     @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
                             </div>
@@ -74,9 +79,9 @@
                             <label for="type" class="form-label"><b>Job Type</b></label>
                             <select class="form-select @error('type') is-invalid @enderror" name="type" id="job-type">
                                 <option value="">Select Job Type</option>
-                                <option value="Full Time" {{ old('type') == 'Full Time' ? 'selected' : '' }}>Full Time</option>
-                                <option value="Part Time" {{ old('type') == 'Part Time' ? 'selected' : '' }}>Part Time</option>
-                                <option value="Contract" {{ old('type') == 'Contract' ? 'selected' : '' }}>Contract</option>
+                                <option value="Full Time" {{ old('type', $job_data->type ?? '') == 'Full Time' ? 'selected' : '' }}>Full Time</option>
+                                <option value="Part Time" {{ old('type', $job_data->type ?? '') == 'Part Time' ? 'selected' : '' }}>Part Time</option>
+                                <option value="Contract" {{ old('type' ,$job_data->type ?? '') == 'Contract' ? 'selected' : '' }}>Contract</option>
                             </select>
                             @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -87,7 +92,7 @@
                             <select class="form-select @error('employer_bond') is-invalid @enderror" name="employer_bond">
                                 <option value="">Select Bond</option>
                                 @foreach($employers_bond as $bond)
-                                <option value="{{ $bond->id }}" {{ old('employer_bond') == $bond->id ? 'selected' : '' }}>
+                                <option value="{{ $bond->id }}" {{ old('employer_bond', $job_data->employer_bond ?? '') == $bond->id ? 'selected' : '' }}>
                                     {{ $bond->bond_duration }}
                                 </option>
                                 @endforeach
@@ -98,15 +103,15 @@
                         {{-- Salary Range - You may need to use JS range slider --}}
                         <div class="mb-3">
                             <label class="form-label"><b>Monthly Salary Range</b></label>
-                            <input type="number" name="salary_min" placeholder="Min" class="form-control mb-2" value="{{ old('salary_min') }}">
-                            <input type="number" name="salary_max" placeholder="Max" class="form-control" value="{{ old('salary_max') }}">
+                            <input type="number" name="salary_min" placeholder="Min" class="form-control mb-2" value="{{ old('salary_min',    $job_data->salary_min ?? '') }}">
+                            <input type="number" name="salary_max" placeholder="Max" class="form-control" value="{{ old('salary_max',    $job_data->salary_max ?? '') }}">
                             @error('salary_range') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                         </div>
 
                         {{-- Job Description --}}
                         <div class="mb-3">
                             <label for="description" class="form-label"><b>Job Description</b></label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" name="description">{{ old('description') }}</textarea>
+                            <textarea class="form-control @error('description') is-invalid @enderror" name="description">{{ old('description',    $job_data->description ?? '') }}</textarea>
                             @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
@@ -117,12 +122,12 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="start_time" class="form-label"><b>Start Time</b></label>
-                                        <input type="time" class="form-control @error('start_time') is-invalid @enderror" name="start_time" value="{{ old('start_time') }}">
+                                        <input type="time" class="form-control @error('start_time') is-invalid @enderror" name="start_time" value="{{ old('start_time', $job_data->start_time ?? '') }}">
                                         @error('start_time') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="end_time" class="form-label"><b>End Time</b></label>
-                                        <input type="time" class="form-control @error('end_time') is-invalid @enderror" name="end_time" value="{{ old('end_time') }}">
+                                        <input type="time" class="form-control @error('end_time') is-invalid @enderror" name="end_time" value="{{ old('end_time', $job_data->end_time ?? '') }}">
                                         @error('end_time') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
@@ -135,7 +140,7 @@
                             <select class="form-select @error('job_category') is-invalid @enderror" name="job_category">
                                 <option value="">Select Job Category</option>
                                 @foreach($jobCategories as $category)
-                                <option value="{{ $category->id }}" {{ old('job_category') == $category->id ? 'selected' : '' }}>
+                                <option value="{{ $category->id }}" {{ old('job_category', $job_data->job_category ?? '') == $category->id ? 'selected' : '' }}>
                                     {{ $category->category_name }}
                                 </option>
                                 @endforeach
@@ -150,17 +155,17 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <label for="company_name" class="form-label"><b>Company Name</b></label>
-                                        <input type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}">
+                                        <input type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name',    $job_data->company_name ?? '') }}">
                                         @error('company_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="name" class="form-label"><b>Employer Name</b></label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name',  $job_data->name ?? '') }}">
                                         @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="phone_number" class="form-label"><b>Phone Number</b></label>
-                                        <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}">
+                                        <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number',    $job_data->phone_number ?? '') }}">
                                         @error('phone_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
@@ -171,13 +176,13 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="food_allowance" value="1" {{ old('food_allowance') ? 'checked' : '' }}>
+                                    <input type="checkbox" class="form-check-input" name="food_allowance" value="1" {{ old('food_allowance',    $job_data->food_allowance ?? '') ? 'checked' : '' }}>
                                     <label class="form-check-label" for="food_allowance"><b>Food Allowance</b></label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="travel_allowance" value="1" {{ old('travel_allowance') ? 'checked' : '' }}>
+                                    <input type="checkbox" class="form-check-input" name="travel_allowance" value="1" {{ old('travel_allowance', $job_data->travel_allowance ?? '') ? 'checked' : '' }}>
                                     <label class="form-check-label" for="travel_allowance"><b>Travel Allowance</b></label>
                                 </div>
                             </div>

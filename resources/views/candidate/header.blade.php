@@ -80,7 +80,7 @@
                 </li>  -->
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="/profilecreate">Profile Edit</a>
+                    <a class="nav-link" href="/profilecreate">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/about_us">About Us</a>
