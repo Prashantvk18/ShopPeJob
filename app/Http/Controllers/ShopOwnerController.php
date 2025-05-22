@@ -18,14 +18,20 @@ class ShopOwnerController extends Controller
         $job_data = EmployerJob::where('created_by' , $user->id)->where('is_delete' , 0)->get();
         return view('shop_owner.home',['job_data' => $job_data]);
     }
-    public function createjob()
-    {
-        return view('shop_owner.createjob', [
-            'states' => State::all(),
-            'cities' => City::all(),
-            'employers_bond' => EmployerBond::all(),
-            'jobCategories' => JobCategory::all(),
-        ]);
+    public function createjob($id)
+    {    $user = \Auth::user();
+        $job_data = EmployerJob::where('id' , $id)->where('created_by' , $user->id)->first();
+        if($job_data || $id == 0){
+            return view('shop_owner.createjob', [
+                'job_data'=>$job_data,
+                'states' => State::all(),
+                'cities' => City::all(),
+                'employers_bond' => EmployerBond::all(),
+                'jobCategories' => JobCategory::all(),
+            ]);
+        }
+        return redirect()->route('home');
+        
     }
     public function storeJob(Request $request)
     {
@@ -53,8 +59,9 @@ class ShopOwnerController extends Controller
         $validated['created_by'] = $user->id;
 
         // Store job logic here (e.g., Job::create($validated);)
-        EmployerJob::create($validated);
-        return redirect()->route('createjob')->with('message', 'Job posted successfully.');
+        
+        EmployerJob::updateOrCreate(['id' => $request->dataid],$validated);
+        return redirect()->route('home')->with('message', 'Job posted successfully.');
     }
 
     public function job_status(Request $request){
@@ -63,5 +70,10 @@ class ShopOwnerController extends Controller
         $job_status->is_publish = $request->status == 'true' ? 1 : 0 ;
         $job_status->save();
         return response()->json(['message' => 'Form submitted successfully']);
+    }
+
+
+    public function about_us(){
+        return view('shop_owner.aboutus');
     }
 }

@@ -59,7 +59,7 @@
                     <a class="nav-link active" aria-current="page" href="/shome">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/createjob">Create Job</a>
+                    <a class="nav-link" href="/createjob/0">Create Job</a>
                 </li>]
                 <!-- Dropdown Menu -->
                 <!-- <li class="nav-item dropdown">
@@ -74,7 +74,7 @@
                     </ul>
                 </li>  -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">About Us</a>
+                    <a class="nav-link" href="/about_us">About Us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>

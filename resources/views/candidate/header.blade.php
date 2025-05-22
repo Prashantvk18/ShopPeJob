@@ -78,6 +78,10 @@
                         <li><a class="dropdown-item" href="/trip_roadmap">Road Map</a></li>
                     </ul>
                 </li>  -->
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/profilecreate">Profile</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/candidate_profile">Profile</a>
                 </li>
@@ -114,7 +118,7 @@
     }
 
     .navbar-nav .nav-link {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         color: #f8f9fa !important;
         padding: 8px 16px;
     }

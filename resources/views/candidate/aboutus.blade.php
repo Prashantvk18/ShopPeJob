@@ -1,46 +1,126 @@
 @include('candidate.header')
+    <style>
+        .container {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
 
-<div class="container mt-5 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
-            <div class="card shadow-sm border border-dark" style="border-radius: 10px;">
-                <div class="card-body">
-                    <h2 class="text-center mb-4">
-                        <i class="fa fa-info-circle text-dark me-2"></i> About Us
-                    </h2>
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-                    <p class="mb-4" style="font-size: 1.1rem;">
-                        <strong>Welcome to our Job Portal!</strong> We are dedicated to connecting employers with talented individuals looking for the right opportunities. Whether you're a business seeking trustworthy staff or a candidate seeking your next job, we make the process simple and efficient.
-                    </p>
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
 
-                    <p class="mb-4" style="font-size: 1.1rem;">
-                        Our platform is designed to be clean, fast, and user-friendly. We believe that hiring and applying for jobs shouldn't be complicated. That's why we keep everything clear and straightforward — with real-time job listings, detailed job descriptions, and easy application options.
-                    </p>
+        .hero p {
+            font-size: 2.3rem;
+            color: #555;
+        }
 
-                    <p class="mb-4" style="font-size: 1.1rem;">
-                        <i class="fa fa-check-circle text-success me-2"></i> <strong>Verified Jobs</strong><br>
-                        <i class="fa fa-check-circle text-success me-2"></i> <strong>Easy-to-use Interface</strong><br>
-                        <i class="fa fa-check-circle text-success me-2"></i> <strong>Responsive Support Team</strong><br>
-                        <i class="fa fa-check-circle text-success me-2"></i> <strong>Free for Job Seekers</strong>
-                    </p>
+        .mission, .team, .contact {
+            margin-bottom: 40px;
+        }
 
-                    <hr>
+        h2 {
+            font-size: 2rem;
+            color: #333;
+        }
 
-                    <div class="text-center mt-4">
-                        <p class="mb-2">
-                            <i class="fa fa-envelope text-primary me-2"></i> <strong>Email:</strong> support@yourjobportal.com
-                        </p>
-                        <p>
-                            <i class="fa fa-phone text-success me-2"></i> <strong>Phone:</strong> +91 98765 43210
-                        </p>
-                        <a href="{{ route('home') }}" class="btn btn-dark mt-3">
-                            <i class="fa fa-arrow-left me-2"></i> Back to Home
-                        </a>
-                    </div>
+        p {
+            font-size: 3rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .teamMembers {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .member {
+            text-align: center;
+            max-width: 200px;
+            margin: 10px;
+        }
+
+        .member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .member h3 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .member p {
+            font-size: 1rem;
+            color: #777;
+        }
+
+        .contact a {
+            color: #0070f3;
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <h1>About Us</h1>
+            <p>Your trusted partner in finding the right jobs for you!</p>
+        </section>
+
+        <section class="mission">
+            <h2>Our Mission</h2>
+            <p>
+                We are committed to bridging the gap between talented individuals and amazing companies. Our platform
+                provides an easy-to-use interface to find, apply, and manage job opportunities in a variety of industries.
+            </p>
+        </section>
+
+        <section class="team">
+            <h2>Meet Our Team</h2>
+            <div class="teamMembers">
+                <div class="member">
+                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Team Member">
+                    <h3>John Doe</h3>
+                    <p>CEO & Founder</p>
+                    <p>John has over 15 years of experience in the recruitment industry and is passionate about helping people find fulfilling careers.</p>
+                </div>
+                <div class="member">
+                    <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Team Member">
+                    <h3>Jane Smith</h3>
+                    <p>Chief Marketing Officer</p>
+                    <p>Jane leads our marketing efforts, bringing innovative ideas to help us reach job seekers and employers alike.</p>
+                </div>
+                <div class="member">
+                    <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Team Member">
+                    <h3>Michael Brown</h3>
+                    <p>Lead Developer</p>
+                    <p>Michael oversees the technical aspects of our website, ensuring that it remains fast, secure, and user-friendly.</p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or feedback, feel free to reach out to us at 
+                <a href="mailto:info@jobsite.com">info@jobsite.com</a>.
+            </p>
+        </section>
     </div>
-</div>
+
 
 @include('candidate.footer')

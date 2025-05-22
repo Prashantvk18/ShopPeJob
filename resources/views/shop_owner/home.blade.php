@@ -50,7 +50,7 @@ data-bs-interval="3000">
       <div class="col-md-4">
         <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
         <!-- Edit Button (top-right corner) -->
-        <a href="" class="btn btn-sm btn-outline-secondary position-absolute" 
+        <a href="/createjob/{{$job->id}}" class="btn btn-sm btn-outline-secondary position-absolute" 
              style="top: 10px; right: 10px; z-index: 10;">
             <i class="fa fa-pencil"></i> Edit
           </a>
