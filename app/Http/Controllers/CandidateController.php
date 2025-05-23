@@ -34,10 +34,26 @@ class CandidateController extends Controller
        
     }
 
-    public function jobs(){
+    public function jobs(Request $request){
+        
         $user = \Auth::user();
-        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->get();
-        return view('candidate.jobs',['job_data' => $job_data]);
+        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0);
+        if($request->state){
+            $job_data =  $job_data->where('state' , $request->state);
+        }
+        if($request->city){
+             $job_data  =   $job_data->where('city' , $request->city);
+        }
+        if($request->looking_job){
+            $job_data = $job_data->where('job_category' , $request->looking_job);
+        }
+        
+        return view('candidate.jobs',[
+            'cities' => City::all(),
+            'states' => State::all(),
+            'jobCategories' => JobCategory::all(),
+            'job_data' => $job_data->get()
+        ]);
     }
 
     public function about_us(){

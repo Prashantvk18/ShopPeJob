@@ -16,7 +16,9 @@ class ShopOwnerController extends Controller
     {   
         $user = \Auth::user();
         $job_data = EmployerJob::where('created_by' , $user->id)->where('is_delete' , 0)->get();
-        return view('shop_owner.home',['job_data' => $job_data]);
+        return view('shop_owner.home',[
+            'states' => State::all(),
+            'job_data' => $job_data]);
     }
     public function createjob($id)
     {    $user = \Auth::user();

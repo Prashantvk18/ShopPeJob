@@ -60,7 +60,12 @@ data-bs-interval="3000">
             </h5>
             <p class="card-text mb-2">
               <i class="fa fa-map-marker text-danger me-2"></i>
-              <strong>Venue:</strong> {{ $job->state }} , {{ $job->city }}
+              <strong>Venue:</strong> 
+              @foreach($states as $state)
+              @if($state->id == $job->state)
+                {{ $state->name}}
+              @endif
+              @endforeach  , {{ $job->city }}
             </p>
             <p class="card-text mb-2">
               <i class="fa fa-clock-o text-warning me-2"></i>

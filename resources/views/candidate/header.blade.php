@@ -82,9 +82,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/profilecreate">Profile</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/candidate_profile">Profile</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="/about_us">About Us</a>
                 </li>
