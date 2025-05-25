@@ -14,21 +14,30 @@ use App\Models\JobCategory;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\CandidateProfile;
+use App\Models\JobApplied;
 
 class CandidateController extends Controller
 {
     public function home(){
         $user = \Auth::user();
-        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->get();
-        return view('candidate.home',['job_data' => $job_data]);
+        $applied_job = JobApplied::where('user_id' , $user->id)->pluck('job_id')->filter()->toArray();
+        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->whereNotIn('id' , $applied_job)->get();
+        return view('candidate.home',[
+             'states' => State::all(),
+             'job_data' => $job_data
+            ]);
     }
 
-    public function job_details($id){
+    public function job_details($id,$apl){
         $job_data = EmployerJob::where('id' , $id)->where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->first();
         $employer_bond = EmployerBond::All();
         $employer_state = State::All();
         if($job_data){
-            return view('candidate.job_details',['job' => $job_data , 'employer_bond' => $employer_bond , 'state' => $employer_state]);
+            return view('candidate.job_details',[
+                'apl' => $apl,
+                'job' => $job_data ,
+                'employer_bond' => $employer_bond ,
+                'state' => $employer_state]);
         }
         return redirect('/home');
        
@@ -37,7 +46,8 @@ class CandidateController extends Controller
     public function jobs(Request $request){
         
         $user = \Auth::user();
-        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0);
+         $applied_job = JobApplied::where('user_id' , $user->id)->pluck('job_id')->filter()->toArray();
+        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->whereNotIn('id' , $applied_job);
         if($request->state){
             $job_data =  $job_data->where('state' , $request->state);
         }
@@ -115,6 +125,30 @@ class CandidateController extends Controller
              'is_verify' => $request->is_verify ?? 0,
         ]);
         return redirect()->route('profilecreate')->with('message', 'Profile Updated successfully.');
+    }
+
+    public function jobapply(Request $request){
+        $user = \Auth::user();
+        $applied_job = new JobApplied();
+        $applied_job->user_id = $user->id;
+        $applied_job->job_id = $request->jobid;
+        $applied_job->status = 'P';
+        $applied_job->save();
+        if($request->job){
+           return redirect()->route('jobs')->with('message', 'Job Applied successfully.'); 
+        }
+        return redirect()->route('home')->with('message', 'Job Applied successfully.');
+
+    }
+
+    public function appliedjob(){
+        $user = \Auth::user();
+        $applied_job = JobApplied::where('user_id' , $user->id)->pluck('job_id')->filter()->toArray();
+        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->whereIn('id' , $applied_job)->get();
+        return view('candidate.applied_job', [
+            'states' => State::all(),
+            'job_data' => $job_data
+        ]);
     }
 
 }

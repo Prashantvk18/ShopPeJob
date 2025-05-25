@@ -60,7 +60,10 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/createjob/0">Create Job</a>
-                </li>]
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/applieduser">Applied User</a>
+                </li>
                 <!-- Dropdown Menu -->
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">

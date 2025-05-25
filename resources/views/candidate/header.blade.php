@@ -63,7 +63,7 @@
                
                 @if(Session::get('is_loggedIn'))
                     <li class="nav-item">
-                        <a class="nav-link" href="/viewdocument">Applied Job</a>
+                        <a class="nav-link" href="/appliedjob">Applied Job</a>
                     </li>
                 @endif
                 <!-- Dropdown Menu -->

@@ -103,8 +103,6 @@ data-bs-interval="3000">
 
 <script>
   function updateJobStatus(id , status){
-    console.log(id);
-    console.log(status);
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 

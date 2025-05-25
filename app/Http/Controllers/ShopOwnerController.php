@@ -9,6 +9,8 @@ use App\Models\City;
 use App\Models\EmployerBond;
 use App\Models\EmployerJob;
 use App\Models\JobCategory;
+use App\Models\JobApplied;
+use App\Models\CandidateProfile;
 
 class ShopOwnerController extends Controller
 {
@@ -32,7 +34,7 @@ class ShopOwnerController extends Controller
                 'jobCategories' => JobCategory::all(),
             ]);
         }
-        return redirect()->route('home');
+        return redirect()->route('shome');
         
     }
     public function storeJob(Request $request)
@@ -63,7 +65,7 @@ class ShopOwnerController extends Controller
         // Store job logic here (e.g., Job::create($validated);)
         
         EmployerJob::updateOrCreate(['id' => $request->dataid],$validated);
-        return redirect()->route('home')->with('message', 'Job posted successfully.');
+        return redirect()->route('shome')->with('message', 'Job posted successfully.');
     }
 
     public function job_status(Request $request){
@@ -74,7 +76,18 @@ class ShopOwnerController extends Controller
         return response()->json(['message' => 'Form submitted successfully']);
     }
 
-
+    public function applieduser(){
+        $user = \Auth::user();
+        $job_id = EmployerJob::where('created_by' , $user->id)->pluck('id')->toArray();
+        $applied_user = JobApplied::WhereIn('job_id' , $job_id)->pluck('user_id')->toArray();
+        $applied_user_data = CandidateProfile::where('id' , $applied_user)->get();
+        return view('shop_owner.applied_user',[
+            'states' => State::all(),
+            'jobCategories' => JobCategory::all(),
+            'applied_user_data' => $applied_user_data
+        ]);
+        
+    }
     public function about_us(){
         return view('shop_owner.aboutus');
     }

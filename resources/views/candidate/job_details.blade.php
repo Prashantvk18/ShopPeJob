@@ -63,9 +63,15 @@
                             <strong>Phone:</strong> {{ $job->phone_number }}
                         </p>
                     </div>
+                    @if($apl == 0)
                     <a href="" class="btn btn-dark w-100 mt-3">
                          Apply Job
                     </a>
+                    @elseif($apl == 1)
+                    <p class="btn btn-dark mt-auto w-100" disabled>
+                            Applied 
+                        </p>
+                    @endif
                 </div>
             </div>
         </div>
