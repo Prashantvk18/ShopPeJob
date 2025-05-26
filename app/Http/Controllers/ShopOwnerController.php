@@ -80,7 +80,7 @@ class ShopOwnerController extends Controller
         $user = \Auth::user();
         $job_id = EmployerJob::where('created_by' , $user->id)->pluck('id')->toArray();
         $applied_user = JobApplied::WhereIn('job_id' , $job_id)->pluck('user_id')->toArray();
-        $applied_user_data = CandidateProfile::where('id' , $applied_user)->get();
+        $applied_user_data = CandidateProfile::where('user_id' , $applied_user)->get();
         return view('shop_owner.applied_user',[
             'states' => State::all(),
             'jobCategories' => JobCategory::all(),
@@ -88,6 +88,21 @@ class ShopOwnerController extends Controller
         ]);
         
     }
+
+    public function user_details(Request $request){
+        $user = \Auth::user();
+        $job_id = EmployerJob::where('created_by' , $user->id)->pluck('id')->toArray();
+        $applied_user = JobApplied::WhereIn('job_id' , $job_id)->pluck('user_id')->toArray();
+        if(in_array($request->id , $applied_user)){
+            $user_data = CandidateProfile::where('user_id' , $request->id)->first();
+            return view('shop_owner.user_details',[
+            'states' => State::all(),
+            'user_data' => $user_data
+        ]);
+        }
+        return redirect()->route('shome');
+    }
+
     public function about_us(){
         return view('shop_owner.aboutus');
     }

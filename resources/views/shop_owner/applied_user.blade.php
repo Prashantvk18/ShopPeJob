@@ -3,7 +3,7 @@
   <div class="row g-4">
     @foreach($applied_user_data as $user)
       <div class="col-md-4">
-      <a href="{{ route('job_details',[ $user->id , 0]) }}" class="text-decoration-none text-dark">
+      <a href="{{ route('user_details', $user->user_id ) }}" class="text-decoration-none text-dark">
         <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
           <div class="card-body">
             <h5 class="card-title mb-3" style="font-size: 1.25rem; font-weight: 600;">
