@@ -137,6 +137,9 @@ class CandidateController extends Controller
         if($request->job){
            return redirect()->route('jobs')->with('message', 'Job Applied successfully.'); 
         }
+        if($request->job == 2){
+            return redirect()->route('job_details')->with('message', 'Job Applied successfully.'); 
+        }
         return redirect()->route('home')->with('message', 'Job Applied successfully.');
 
     }

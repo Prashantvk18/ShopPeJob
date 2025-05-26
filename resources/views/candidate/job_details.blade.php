@@ -64,13 +64,17 @@
                         </p>
                     </div>
                     @if($apl == 0)
-                    <a href="" class="btn btn-dark w-100 mt-3">
-                         Apply Job
-                    </a>
+                        <form action="{{ route('jobapply') }}" method='post'>
+                            @csrf     
+                        <input type="text" style="display:none" value="2" name="job">
+                        <button class="btn btn-dark mt-auto w-100" type="submit" name="jobid" value="{{$job->id}}">
+                            Apply Job
+                        </a>
                     @elseif($apl == 1)
-                    <p class="btn btn-dark mt-auto w-100" disabled>
+                        <p class="btn btn-dark mt-auto w-100" disabled>
                             Applied 
                         </p>
+                    </form>
                     @endif
                 </div>
             </div>
