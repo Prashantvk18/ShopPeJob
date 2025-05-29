@@ -1,15 +1,40 @@
 @include('shop_owner.header')
+<?php 
+    $exp_array =["lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
+
+    $education = ['less_than_5th' => 'Less than 5th' ,'less_than_10th' => 'Less than 10th','10th' => '10th','12th' => '12th',
+    ];
+?>
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8">
             <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
                 <div class="card-body">
-                    <h5 class="card-title mb-4" style="font-size: 1.5rem; font-weight: 700;">
-                        <i class="fa fa-briefcase me-2 text-primary"></i> 
-                    </h5>
+                @if($apply_job_id->status == 'S')
+                    <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                        <span class="badge bg-success text-white p-2" style="font-size: 1rem; border: 2px solid #28a745;">
+                            ✅ Accepted
+                        </span>
+                    </div>
+                @endif
+                @if($apply_job_id->status == 'R')
+                    <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                    <span class="badge bg-danger text-white p-2" style="font-size: 1rem; border: 2px solid #dc3545;">
+                    ❌ Rejected
+                    </span>
+                    </div>
+                @endif
+                @if($apply_job_id->status == null || $apply_job_id->status == 'P')
+                    <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                        <span class="badge bg-warning text-dark p-2" style="font-size: 1rem; border: 2px solid #ffc107;">
+                            ⏳ Pending
+                        </span>
+                    </div>
+                @endif
 
+                    
                     <p class="card-text mb-3">
-                        <i class="fa fa-building me-2 text-secondary"></i>
+                        <i class="fa fa-user me-2 text-secondary"></i>
                         <strong>Name:</strong> {{ $user_data->first_name }} {{ $user_data->middle_name }} {{ $user_data->last_name }}
                     </p>
                     <p class="card-text mb-3">
@@ -25,20 +50,40 @@
                     </p>
 
                     <p class="card-text mb-3">
+                        <i class="fa fa-briefcase text-info me-2"></i>
+                        <strong>Education:</strong> <span class="ms-2">{{ $education[$user_data->education] }} </span>
+                    </p>
+
+
+                    <p class="card-text mb-3">
                         <i class="fa fa-inr text-success me-2"></i>&nbsp;
                         <strong>Salary Expectation:</strong> ₹{{ $user_data->salary_expect }}/month
                     </p>
 
                     <p class="card-text mb-3">
                         <i class="fa fa-briefcase text-info me-2"></i>
-                        <strong>Work Experiance:</strong>{{ $user_data->work_experience }} 
+                        <strong>Work Experiance:</strong> <span class="ms-2">{{ $exp_array[$user_data->work_experience] }} </span>
                     </p>
 
                     <p class="card-text mb-4">
                         <i class="fa fa-phone me-2 text-success"></i>
-                        <strong>Phone:</strong> <br>
-                        <span class="ms-4">{{  $user_data->phone_number }}</span>
+                        <strong>Phone:</strong>
+                        <span class="ms-2">{{$user_data->mobile_no }}</span>
                     </p>
+                    <div class="mb-3">
+                        <form id="job_status">
+                            @csrf
+                            <div class="col-md-6">
+                                <input type="text" style="display:none" value="{{$apply_job_id->id}}" id="jobid"> 
+                                <button type="submit" class="btn btn-success w-100" name="status"  onclick="update_status('S');" >Accept</button>
+                            </div>
+
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-danger w-100" name="status" onclick="update_status('R');" >Reject</button>
+                                
+                            </div>
+                        </form>
+                    </div>
                     <hr>
                     
                     
@@ -47,4 +92,28 @@
         </div>
     </div>
 </div>
+<script>
+function update_status(status) {
+        var jobid = $("#jobid").val();
+        event.preventDefault();
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
+            },
+            type: 'POST',
+            url : "{{url('user_jobstatus')}}",
+            data :{
+                'jobid':jobid,
+                'status': status
+            },
+
+            success: function (response) {
+               location.reload();
+            },
+            error : function (response) {
+               location.reload();
+            }
+        });
+    }
+</script>
 @include('shop_owner.footer')

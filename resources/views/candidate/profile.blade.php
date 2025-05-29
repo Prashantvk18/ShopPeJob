@@ -1,6 +1,16 @@
 @include('candidate.header')
+<?php 
+    $exp_array =["lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
 
+    $education = [
+        'less_than_5th' => 'Less than 5th',
+        'less_than_10th' => 'Less than 10th',
+        '10th' => '10th',
+        '12th' => '12th',
+    ];
+?>
 <div class="container mt-5">
+    
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -112,14 +122,22 @@
                         {{-- Education --}}
                         <div class="mb-3">
                             <label for="education" class="form-label"><b>Education *</b></label>
-                            <input type="text" class="form-control @error('education') is-invalid @enderror" name="education" value="{{ old('education',$profile_data->education ?? '') }}" required>
+                            <select type="text" class="form-control @error('education') is-invalid @enderror" name="education" value="{{ old('education',$profile_data->education ?? '') }}">
+                            @foreach($education as $key=>$val)
+                                <option value="{{$key}}" {{ old('education', $profile_data->education ?? '') == $key ? 'selected' : '' }}>{{$val}}</option>
+                            @endforeach
+                            </select>
                             @error('education') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         {{-- Work Experience --}}
                         <div class="mb-3">
                             <label for="work_experience" class="form-label"><b>Work Experience *</b></label>
-                            <input type="text" class="form-control @error('work_experience') is-invalid @enderror" name="work_experience" value="{{ old('work_experience',$profile_data->work_experience ?? '') }}" required>
+                            <select type="text" class="form-control @error('work_experience') is-invalid @enderror" name="work_experience">
+                            @foreach($exp_array as $key=>$val)
+                            <option value="{{$key}}" {{ old('work_experience', $profile_data->work_experience ?? '') == $key ? 'selected' : '' }}>{{$val}}</option>
+                            @endforeach
+                            </select>
                             @error('work_experience') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 

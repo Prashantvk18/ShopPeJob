@@ -20,7 +20,8 @@ class ShopOwnerController extends Controller
         $job_data = EmployerJob::where('created_by' , $user->id)->where('is_delete' , 0)->get();
         return view('shop_owner.home',[
             'states' => State::all(),
-            'job_data' => $job_data]);
+            'job_data' => $job_data
+        ]);
     }
     public function createjob($id)
     {    $user = \Auth::user();
@@ -76,31 +77,52 @@ class ShopOwnerController extends Controller
         return response()->json(['message' => 'Form submitted successfully']);
     }
 
-    public function applieduser(){
+    public function applieduser($id){
         $user = \Auth::user();
-        $job_id = EmployerJob::where('created_by' , $user->id)->pluck('id')->toArray();
-        $applied_user = JobApplied::WhereIn('job_id' , $job_id)->pluck('user_id')->toArray();
-        $applied_user_data = CandidateProfile::where('user_id' , $applied_user)->get();
-        return view('shop_owner.applied_user',[
-            'states' => State::all(),
-            'jobCategories' => JobCategory::all(),
-            'applied_user_data' => $applied_user_data
-        ]);
+        $job_data = EmployerJob::where('created_by' , $user->id)->where('id' , $id)->first();
+        if($job_data){
+            $applied_user = JobApplied::Where('job_id' , $id)->pluck('user_id')->toArray();
+                $applied_user_data = CandidateProfile::whereIn('user_id' , $applied_user)->get();
+                return view('shop_owner.applied_user',[
+                'states' => State::all(),
+                'job_data'=> $job_data,
+                'jobCategories' => JobCategory::all(),
+                'applied_user_data' => $applied_user_data
+            ]);
+
+        }
+        return redirect()->route('shome');
         
     }
 
     public function user_details(Request $request){
         $user = \Auth::user();
-        $job_id = EmployerJob::where('created_by' , $user->id)->pluck('id')->toArray();
-        $applied_user = JobApplied::WhereIn('job_id' , $job_id)->pluck('user_id')->toArray();
-        if(in_array($request->id , $applied_user)){
+        $job_id = EmployerJob::where('created_by' , $user->id)->where('id' , $request->jid)->pluck('id')->toArray();
+        $applied_user = JobApplied::WhereIn('job_id' , $job_id)->where('user_id',$request->id)->first();
+        if($applied_user){
             $user_data = CandidateProfile::where('user_id' , $request->id)->first();
             return view('shop_owner.user_details',[
             'states' => State::all(),
-            'user_data' => $user_data
+            'user_data' => $user_data,
+            'apply_job_id' => $applied_user
         ]);
         }
         return redirect()->route('shome');
+    }
+
+    public function user_jobstatus(Request $request){
+        
+        $user = \Auth::user();
+        $job_id = EmployerJob::where('created_by' , $user->id)->pluck('id')->toArray();
+        $applied_job_id = JobApplied::WhereIn('job_id' , $job_id)->pluck('id')->toArray();
+        if(in_array($request->jobid , $applied_job_id)){
+            $change_status = JobApplied::where('id' , $request->jobid)->first();
+            $change_status->status = $request->status;
+            $change_status->accept_by = $user->id;
+            $change_status->save();
+            return response()->json(['message' => 'Status Updated Successfully']);
+        };
+        return response()->json(['errors' =>'Wrong Input'], 400);
     }
 
     public function about_us(){
