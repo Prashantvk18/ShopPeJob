@@ -1,4 +1,4 @@
-@include('candidate.header')
+@include('shop_owner.header')
     <style>
         .container {
             padding: 20px;
@@ -11,12 +11,12 @@
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             margin-bottom: 10px;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 2.2rem;
             color: #555;
         }
 
@@ -25,12 +25,12 @@
         }
 
         h2 {
-            font-size: 2rem;
+            font-size: 3rem;
             color: #333;
         }
 
         p {
-            font-size: 1rem;
+            font-size: 2rem;
             color: #666;
             line-height: 1.6;
         }
@@ -56,12 +56,12 @@
         }
 
         .member h3 {
-            font-size: 1.2rem;
+            font-size: 2.2rem;
             margin: 10px 0;
         }
 
         .member p {
-            font-size: 1rem;
+            font-size: 1.5rem;
             color: #777;
         }
 
@@ -123,4 +123,4 @@
     </div>
 
 
-@include('candidate.footer')
+@include('shop_owner.footer')

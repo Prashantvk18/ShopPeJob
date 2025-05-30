@@ -81,18 +81,17 @@ class ShopOwnerController extends Controller
         $user = \Auth::user();
         $job_data = EmployerJob::where('created_by' , $user->id)->where('id' , $id)->first();
         if($job_data){
-            $applied_user = JobApplied::Where('job_id' , $id)->pluck('user_id')->toArray();
-                $applied_user_data = CandidateProfile::whereIn('user_id' , $applied_user)->get();
+            $applied_user = JobApplied::Where('job_id' , $id)->pluck('status' , 'user_id')->toArray();
+                $applied_user_data = CandidateProfile::whereIn('user_id' , array_keys($applied_user))->get();
                 return view('shop_owner.applied_user',[
                 'states' => State::all(),
                 'job_data'=> $job_data,
                 'jobCategories' => JobCategory::all(),
-                'applied_user_data' => $applied_user_data
+                'applied_user_data' => $applied_user_data,
+                'applied_user_status' => $applied_user
             ]);
-
         }
-        return redirect()->route('shome');
-        
+        return redirect()->route('shome');  
     }
 
     public function user_details(Request $request){
@@ -125,6 +124,16 @@ class ShopOwnerController extends Controller
         return response()->json(['errors' =>'Wrong Input'], 400);
     }
 
+    public function job_delete(Request $request){
+        $user = \Auth::user();
+        $job = EmployerJob::where('created_by' , $user->id)->where('id' , $request->id)->first();
+        if($job){
+            $job->is_delete = 1;
+            $job->save();
+            return response()->json(['message' => 'Job deleted Successfully']);
+        }
+        return response()->json(['errors' =>'Wrong Input'], 400);
+    }
     public function about_us(){
         return view('shop_owner.aboutus');
     }

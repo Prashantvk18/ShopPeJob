@@ -9,6 +9,27 @@
                 <a href="{{ route('job_details', [$job->id , 1]) }}" class="text-decoration-none text-dark">
                     <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
                     <div class="card-body">
+                    @if($applied_user_status[$job->id] == 'S')
+                <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                    <span class="badge bg-success text-white p-2" style="font-size: 1rem; border: 2px solid #28a745;">
+                        ✅ Accepted
+                    </span>
+                </div>
+            @endif
+            @if($applied_user_status[$job->id] == 'R')
+                <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                <span class="badge bg-danger text-white p-2" style="font-size: 1rem; border: 2px solid #dc3545;">
+                ❌ Rejected
+                </span>
+                </div>
+            @endif
+            @if($applied_user_status[$job->id] == null || $applied_user_status[$job->id] == 'P')
+                <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                    <span class="badge bg-warning text-dark p-2" style="font-size: 1rem; border: 2px solid #ffc107;">
+                        ⏳ Pending
+                    </span>
+                </div>
+            @endif
                         <h5 class="card-title mb-3" style="font-size: 1.25rem; font-weight: 600;">
                         <i class="fa fa-briefcase me-2 text-primary"></i> {{ $job->title }}
                         </h5>

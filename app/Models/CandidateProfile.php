@@ -14,6 +14,7 @@ class CandidateProfile extends Model
 
     // Define the fillable fields (to allow mass assignment)
     protected $fillable = [
+        'img_path',
         'user_id',
         'first_name',
         'middle_name',

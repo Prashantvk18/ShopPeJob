@@ -5,11 +5,22 @@
     $education = ['less_than_5th' => 'Less than 5th' ,'less_than_10th' => 'Less than 10th','10th' => '10th','12th' => '12th',
     ];
 ?>
+
+@php
+    $profilePhoto = isset($user_data->img_path) && file_exists(public_path('storage/' . $user_data->img_path)) 
+        ? asset('storage/' . $user_data->img_path) 
+        : asset('default-user.png');
+@endphp
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8">
             <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
                 <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <div class="profile-pic-wrapper">
+                        <img src="{{ $profilePhoto }}" alt="Profile Photo">
+                    </div>
+                </div>
                 @if($apply_job_id->status == 'S')
                     <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
                         <span class="badge bg-success text-white p-2" style="font-size: 1rem; border: 2px solid #28a745;">

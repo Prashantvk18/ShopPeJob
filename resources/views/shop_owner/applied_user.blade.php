@@ -10,16 +10,37 @@
       <a href="{{ route('user_details', [$user->user_id , $job_data->id] ) }}" class="text-decoration-none text-dark">
         <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
           <div class="card-body">
+            @if($applied_user_status[$user->user_id] == 'S')
+                <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                    <span class="badge bg-success text-white p-2" style="font-size: 1rem; border: 2px solid #28a745;">
+                        ✅ Accepted
+                    </span>
+                </div>
+            @endif
+            @if($applied_user_status[$user->user_id] == 'R')
+                <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                <span class="badge bg-danger text-white p-2" style="font-size: 1rem; border: 2px solid #dc3545;">
+                ❌ Rejected
+                </span>
+                </div>
+            @endif
+            @if($applied_user_status[$user->user_id] == null || $applied_user_status[$user->user_id] == 'P')
+                <div style="position: absolute; top: 10px; right: 10px; transform: rotate(-10deg);">
+                    <span class="badge bg-warning text-dark p-2" style="font-size: 1rem; border: 2px solid #ffc107;">
+                        ⏳ Pending
+                    </span>
+                </div>
+            @endif
             <h5 class="card-title mb-3" style="font-size: 1.25rem; font-weight: 600;">
               <i class="fa fa-briefcase me-2 text-primary"></i> {{ $user->first_name }} {{ $user->last_name }}
             </h5>
             <p class="card-text mb-2">
               <i class="fa fa-map-marker text-danger me-2"></i>
               <strong>Address:</strong>
-               @foreach($states as $state)
-              @if($state->id == $user->state)
-                {{ $state->name}}
-              @endif
+              @foreach($states as $state)
+                @if($state->id == $user->state)
+                  {{ $state->name}}
+                @endif
               @endforeach  , {{ $user->city }}
             </p>
             <p class="card-text mb-2">

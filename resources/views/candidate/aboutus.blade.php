@@ -1,6 +1,6 @@
 @include('candidate.header')
     <style>
-        .container {
+       .container {
             padding: 20px;
             font-family: Arial, sans-serif;
         }
@@ -16,7 +16,7 @@
         }
 
         .hero p {
-            font-size: 2.3rem;
+            font-size: 2.2rem;
             color: #555;
         }
 
@@ -25,12 +25,12 @@
         }
 
         h2 {
-            font-size: 2rem;
+            font-size: 3rem;
             color: #333;
         }
 
         p {
-            font-size: 3rem;
+            font-size: 2rem;
             color: #666;
             line-height: 1.6;
         }
@@ -56,12 +56,12 @@
         }
 
         .member h3 {
-            font-size: 1.2rem;
+            font-size: 2.2rem;
             margin: 10px 0;
         }
 
         .member p {
-            font-size: 1rem;
+            font-size: 1.5rem;
             color: #777;
         }
 

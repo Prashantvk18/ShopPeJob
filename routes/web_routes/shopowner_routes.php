@@ -10,6 +10,7 @@ Route::controller(ShopOwnerController::class)->group(function () {
     Route::get('/createjob/{id}', 'createjob')->name('createjob');
     Route::post('/store-job', 'storeJob')->name('store.job');
     Route::post('/job_status', 'job_status')->name('job_status');
+    Route::post('/job_delete', 'job_delete')->name('job_delete');
     Route::post('/user_jobstatus', 'user_jobstatus')->name('user_jobstatus');
-    Route::get('/about_us','about_us')->name('about_us');
+    Route::get('/sabout_us','about_us')->name('about_us');
 });

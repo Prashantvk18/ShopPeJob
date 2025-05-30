@@ -92,7 +92,7 @@ class CandidateController extends Controller
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
-            
+            'img_path' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'dob' => 'required|string',
             'address' => 'required|string',
             'state' => 'required|string',
@@ -103,11 +103,17 @@ class CandidateController extends Controller
             'is_deleted' => 'nullable|boolean',
             'is_verify' => 'nullable|boolean',
         ]);
-       
 
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = time() . '_' .$request->first_name.'.'.$image->getClientOriginalExtension();
+            // Save the file to public/storage/profile_photos
+            $image->move(public_path('storage/profile_photos'), $imageName);
+        }
        $candidate = CandidateProfile::updateOrCreate(
             ['user_id' => $user->id],
             ['user_id' => $user->id,
+             'img_path' =>'profile_photos/' . $imageName,
              'first_name' => $request->first_name,
              'middle_name' => $request->middle_name,
              'last_name' => $request->last_name,
@@ -146,11 +152,12 @@ class CandidateController extends Controller
 
     public function appliedjob(){
         $user = \Auth::user();
-        $applied_job = JobApplied::where('user_id' , $user->id)->pluck('job_id')->filter()->toArray();
-        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->whereIn('id' , $applied_job)->get();
+        $applied_job = JobApplied::where('user_id' , $user->id)->pluck('status' , 'job_id')->filter()->toArray();
+        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->whereIn('id' , array_keys($applied_job))->get();
         return view('candidate.applied_job', [
             'states' => State::all(),
-            'job_data' => $job_data
+            'job_data' => $job_data,
+            'applied_user_status' => $applied_job
         ]);
     }
 

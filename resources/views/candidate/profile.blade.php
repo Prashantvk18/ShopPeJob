@@ -1,4 +1,56 @@
 @include('candidate.header')
+<style>
+    .profile-pic-wrapper {
+        position: relative;
+        width: 130px;
+        height: 130px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-pic-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+    }
+    .profile-pic-wrapper input[type="file"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .edit-icon {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 30px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        text-align: center;
+        font-size: 14px;
+        line-height: 30px;
+        border-bottom-left-radius: 50%;
+        border-bottom-right-radius: 50%;
+        display: none;
+    }
+
+    .profile-pic-wrapper:hover .edit-icon {
+        display: block;
+    }
+</style>
+
+
 <?php 
     $exp_array =["lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
 
@@ -9,6 +61,11 @@
         '12th' => '12th',
     ];
 ?>
+@php
+    $profilePhoto = isset($profile_data->img_path) && file_exists(public_path('storage/' . $profile_data->img_path)) 
+        ? asset('storage/' . $profile_data->img_path) 
+        : asset('default-user.png');
+@endphp
 <div class="container mt-5">
     
     <div class="row justify-content-center">
@@ -18,7 +75,6 @@
                     <h4>User Profile</h4>
                 </div>
                 <div class="card-body">
-
                     <!-- Display Session Messages -->
                     @if(session('message'))
                         <div class="alert {{ str_contains(session('message'), 'successfully') ? 'alert-success' : 'alert-danger' }}">
@@ -27,8 +83,16 @@
                     @endif
 
                     <!-- Form Starts Here -->
-                    <form method="POST" action="{{ route('profilestore') }}">
+                    <form method="POST" action="{{ route('profilestore') }}"  enctype="multipart/form-data">
                         @csrf
+                        <div class="d-flex justify-content-center">
+                            <div class="profile-pic-wrapper">
+                                <img src="{{ $profilePhoto }}" alt="Profile Photo">
+                                <input type="file" name="photo" accept="image/*" class="@error('photo') is-invalid @enderror">
+                                <div class="edit-icon">Edit</div>
+                            </div>
+                        </div>
+                @error('photo') <div class="text-danger text-center">{{ $message }}</div> @enderror
 
                         {{-- First Name --}}
                         <div class="mb-3">
