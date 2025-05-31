@@ -96,6 +96,7 @@ class CandidateController extends Controller
             'dob' => 'required|string',
             'address' => 'required|string',
             'state' => 'required|string',
+            'state' => 'required|string',
             'city' => 'required|string',
             'education' => 'required|string',
             'work_experience' => 'required|string',

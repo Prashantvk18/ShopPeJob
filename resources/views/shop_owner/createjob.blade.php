@@ -147,19 +147,29 @@
                             </select>
                             @error('job_category') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
-
+                        {{-- Gender --}}
+                        <div class="mb-3">
+                                <label for="gender" class="form-label"><b>Gender Required*</b></label>
+                                <select class="form-select @error('gender') is-invalid @enderror" name="gender" required style="margin-bottom:20px; height:35px;">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male" {{ old('gender', $job_data->gender ?? '') == 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ old('gender' ,$job_data->gender ?? '') == 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Other" {{ old('gender', $job_data->gender ?? '') == 'both' ? 'selected' : '' }}>Both can apply</option>
+                                </select>
+                                @error('gender') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
                         {{-- Company Information --}}
                         <div class="mb-3">
                             <div class="p-3 border rounded-3 shadow-sm">
-                                <h5 class="mb-3">Company Information</h5>
+                                <h5 class="mb-3">Shop Information</h5>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
-                                        <label for="company_name" class="form-label"><b>Company Name</b></label>
+                                        <label for="company_name" class="form-label"><b>Shop Name</b></label>
                                         <input type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name',    $job_data->company_name ?? '') }}">
                                         @error('company_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="name" class="form-label"><b>Employer Name</b></label>
+                                        <label for="name" class="form-label"><b>Owner Name</b></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name',  $job_data->name ?? '') }}">
                                         @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>

@@ -19,7 +19,16 @@
                         <br>
                         &nbsp; &nbsp; &nbsp;{{$job->address}}
                     </p>
-
+                    <p class="card-text mb-2">
+                        @if($job->gender == 'Male')
+                        <i class="fa fa-male text-info me-2"></i>
+                        @elseif($job->gender == 'Female')
+                        <i class="fa fa-female text-info me-2"></i>
+                        @else
+                        <i class="fa fa-male text-info"></i><i class="fa fa-female text-info"></i>
+                        @endif
+                        <strong>Required:</strong> {{ $job->gender }}
+                    </p>
                     <p class="card-text mb-3">
                         <i class="fa fa-clock-o text-warning me-2"></i>
                         <strong>Working Hours:</strong> 
@@ -52,7 +61,7 @@
                     <div class="border rounded-3 p-3 bg-light">
                         <h6 class="mb-3">
                             <i class="fa fa-user me-2 text-dark"></i> 
-                            <strong>Employer Info</strong>
+                            <strong>Shop Owner Info</strong>
                         </h6>
                         <p class="mb-2">
                             <i class="fa fa-user-circle me-2 text-secondary"></i> 

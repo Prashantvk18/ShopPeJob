@@ -3,7 +3,7 @@
 <h3><b>{{$job_data->title}}</b></h3>
   @if(count($applied_user_data) == 0)
         <p>User Not Applied</p>
-    @endif
+  @endif
   <div class="row g-4">
     @foreach($applied_user_data as $user)
       <div class="col-md-4">
@@ -32,7 +32,7 @@
                 </div>
             @endif
             <h5 class="card-title mb-3" style="font-size: 1.25rem; font-weight: 600;">
-              <i class="fa fa-briefcase me-2 text-primary"></i> {{ $user->first_name }} {{ $user->last_name }}
+              <i class="fa fa-user me-2 text-primary"></i> {{ $user->first_name }} {{ $user->last_name }}
             </h5>
             <p class="card-text mb-2">
               <i class="fa fa-map-marker text-danger me-2"></i>
