@@ -47,6 +47,7 @@ class ShopOwnerController extends Controller
             'city' => 'required|string|max:255',
             'address' => 'required|string|max:500',
             'type' => 'required|string|in:Full Time,Part Time,Contract',
+            'gender' => 'required|string',
             'employer_bond' => 'nullable|required_if:type,Contract|integer',
             'salary_min' => 'nullable|integer|min:0',
             'salary_max' => 'nullable|integer|min:0',

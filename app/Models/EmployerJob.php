@@ -12,6 +12,7 @@ class EmployerJob extends Model
         'city',
         'address',
         'type',
+        'gender',
         'employer_bond',
         'salary_min',
         'salary_max',

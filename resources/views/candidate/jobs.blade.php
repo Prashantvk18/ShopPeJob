@@ -71,9 +71,20 @@
               @endforeach  , {{ $job->city }}
             </p>
             <p class="card-text mb-2">
+              @if($job->gender == 'Male')
+                <i class="fa fa-male text-info me-2"></i>
+              @elseif($job->gender == 'Female')
+                <i class="fa fa-female text-info me-2"></i>
+              @else
+                <i class="fa fa-male text-info"></i><i class="fa fa-female text-info"></i>
+              @endif
+              <strong>Required:</strong> {{ $job->gender }}
+            </p>
+            <p class="card-text mb-2">
               <i class="fa fa-clock-o text-warning me-2"></i>
               <strong>Time:</strong> {{ $job->start_time }} - {{ $job->end_time }}
             </p>
+            
             <p class="card-text">
               <i class="fa fa-inr text-success me-2"></i>
               <strong>Salary:</strong> ₹{{ $job->salary_min }} - ₹{{ $job->salary_max }}/month
