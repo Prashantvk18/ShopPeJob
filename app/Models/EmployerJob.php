@@ -12,6 +12,7 @@ class EmployerJob extends Model
         'city',
         'address',
         'type',
+        'contract_period',
         'gender',
         'employer_bond',
         'salary_min',
@@ -24,6 +25,8 @@ class EmployerJob extends Model
         'name',
         'phone_number',
         'food_allowance',
+        'dinner',
+        'stay',
         'travel_allowance',
         'created_by'
     ];

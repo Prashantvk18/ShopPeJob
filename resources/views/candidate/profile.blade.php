@@ -52,7 +52,7 @@
 
 
 <?php 
-    $exp_array =["lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
+    $exp_array =["fresher" => "Fresher" , "lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
 
     $education = [
         'less_than_5th' => 'Less than 5th',
@@ -87,11 +87,12 @@
                         @csrf
                         <div class="d-flex justify-content-center">
                             <div class="profile-pic-wrapper">
-                                <img src="{{ $profilePhoto }}" alt="Profile Photo">
-                                <input type="file" name="photo" accept="image/*" class="@error('photo') is-invalid @enderror">
+                                <img id="profileImage" src="{{ $profilePhoto }}" alt="Profile Photo">
+                                <input type="file" name="photo"  id="photoInput"  accept="image/*" class="@error('photo') is-invalid @enderror">
                                 <div class="edit-icon">Edit</div>
                             </div>
                         </div>
+                         <!-- <div id="fileName" style="margin-top: 10px; font-size: 14px; color: #555;"></div> -->
                 @error('photo') <div class="text-danger text-center">{{ $message }}</div> @enderror
 
                         {{-- First Name --}}
@@ -236,8 +237,30 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('photoInput').addEventListener('change', function (event) {
+        const fileInput = event.target;
+        //const fileNameDisplay = document.getElementById('fileName');
+        const profileImage = document.getElementById('profileImage');
 
+        if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+
+            // Show the file name
+           // fileNameDisplay.textContent = "Selected file: " + file.name;
+
+            // Preview the image
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profileImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            fileNameDisplay.textContent = "";
+            profileImage.src = "{{ $profilePhoto }}"; // fallback
+        }
+    });
+</script>
 @include('candidate.footer')
 
-</body>
-</html>
+

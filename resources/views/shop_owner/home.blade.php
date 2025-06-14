@@ -45,20 +45,32 @@ data-bs-interval="3000">
 </div>
 <br>
 <div class="container mt-4">
+   @if(session('message'))
+    <div class="alert {{ str_contains(session('message'), 'successfully') ? 'alert-success' : 'alert-danger' }}">
+        {{ session('message') }}
+    </div>
+  @endif
   <div class="row g-4">
     @foreach($job_data as $job)
       <div class="col-md-4">
-        <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px;">
+        <div class="card shadow-sm border border-dark h-100" style="border-radius: 10px; @if($job->is_delete) background-color:#f2f2f2 @endif">
         <!-- Edit Button (top-right corner) -->
           @if($job->is_publish)
           <a href="/applieduser/{{$job->id}}" class="btn btn-sm btn-outline-secondary position-absolute" 
-             style="top: 10px; right: 60px; z-index: 10;">
+             style="top: 10px; right: 70px; z-index: 10;">
             <i class="fa fa-user"></i> User
           </a>
+          @if(!$job->is_delete)
           <button class="btn btn-sm btn-outline-secondary position-absolute" 
-              style="top: 10px; right: 5px; z-index: 10;" onclick='delete_job({{$job->id}})'>
-              <i class="fa fa-trash"></i> Delete
+              style="top: 10px; right: 0px; z-index: 10;" onclick='close_job({{$job->id}})'>
+              <i class="fa fa-times-circle"></i> Close
           </button>
+          @else
+           <label class="btn btn-sm  position-absolute" 
+              style="top: 10px; right: 0px; z-index: 10; color:red" disabled>
+              <i class="fa fa-times-circle"></i> Closed
+          </label>
+          @endif
           @else
             <a href="/createjob/{{$job->id}}" class="btn btn-sm btn-outline-secondary position-absolute" 
               style="top: 10px; right: 10px; z-index: 10;">
@@ -86,7 +98,16 @@ data-bs-interval="3000">
             </p>
             <p class="card-text">
               <i class="fa fa-inr text-success me-2"></i>
-              <strong>Salary:</strong> ₹{{ $job->salary_min }} - ₹{{ $job->salary_max }}/month
+              <strong>Salary:</strong> ₹{{ $job->salary_min }} - ₹{{ $job->salary_max }}/
+              @if(isset($job->employer_bond))
+              @foreach($employers_bond as $bond)
+                @if($bond->id == $job->employer_bond)
+                  {{$bond->salary_type}}
+                @endif
+              @endforeach
+              @else
+                Month
+              @endif
             </p>
             <div class="d-flex align-items-center justify-content-between mt-3">
               @if($job->is_publish)
@@ -148,8 +169,8 @@ data-bs-interval="3000">
     }
   }
 
-  function delete_job(id){
-    let result = confirm("Are you sure");
+  function close_job(id){
+    let result = confirm("Are you sure you want to close this job");
     if(result){
       $.ajax({
         headers: {

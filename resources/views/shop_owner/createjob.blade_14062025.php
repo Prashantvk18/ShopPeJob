@@ -1,11 +1,11 @@
 @include('shop_owner.header')
 <div class="container mt-5">
-    <!-- <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-end mb-3">
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="languageToggle">
             <label class="form-check-label" for="languageToggle" id="languageLabel">English</label>
         </div>
-    </div> -->
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -30,7 +30,7 @@
 
                         {{-- Job Title --}}
                         <div class="mb-3">
-                            <label for="title" class="form-label" data-en="Job Title" data-hi="नौकरी का शीर्षक"><b>Job Title</b></label>
+                            <label for="title" class="form-label"><b>Job Title</b></label>
                             <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title',$job_data->title ?? '') }}">
                             @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -38,7 +38,7 @@
                         {{-- Location Details --}}
                         <div class="mb-3">
                             <div class="p-3 border rounded-3 shadow-sm">
-                                <label class="mb-3" class="form-label"  data-en="Location Details" data-hi="स्थान विवरण"><b>Location Details</b></label>
+                                <h5 class="mb-3">Location Details</h5>
 
                                 <div class="d-flex justify-content-between">
                                     {{-- State --}}
@@ -111,13 +111,13 @@
                         </div>
                         {{--To enter numbers of days , month ,year --}}
                         <div class="mb-3" id="contract-number" style="display: none;">
-                            <label id="contract-numberLabel"for="contract_period" class="form-label"><b>Enter Contract Period</b></label>
+                            <label for="contract_period" class="form-label"><b>Enter Contract Period</b></label>
                             <input placeholder="eg for 10 days/months/year" type="number" class="form-control @error('contract_period') is-invalid @enderror" name="contract_period" value="{{ old('contract_period',$job_data->contract_period ?? '') }}">
                             @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                         {{-- Salary Range - You may need to use JS range slider --}}
                         <div class="mb-3">
-                            <label id="salary-range-label" class="form-label"><b>Monthly Salary Range</b></label>
+                            <label class="form-label"><b>Monthly Salary Range</b></label>
                             <input type="number" name="salary_min" placeholder="Min" class="form-control mb-2" value="{{ old('salary_min',    $job_data->salary_min ?? '') }}">
                             <input type="number" name="salary_max" placeholder="Max" class="form-control" value="{{ old('salary_max',    $job_data->salary_max ?? '') }}">
                             @error('salary_range') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
@@ -246,48 +246,14 @@
         const jobTypeSelect = document.getElementById('job-type');
         const bondField = document.getElementById('employer-bond-field');
         const contractField = document.getElementById('contract-number');
-        // const langToggle = document.getElementById('languageToggle');
-        // const langLabel = document.getElementById('languageLabel');
-        const bondSelect = document.querySelector('select[name="employer_bond"]');
-        const salaryRangeLabel = document.getElementById('salary-range-label');
-        const contractFieldLabel = document.getElementById('contract-numberLabel');
-        
-
+       
         function toggleBond() {
             bondField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
             contractField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
         }
 
-        // function switchLanguage(isHindi) {
-        //     document.querySelectorAll('[data-en]').forEach(el => {
-        //         el.textContent = isHindi ? el.getAttribute('data-hi') : el.getAttribute('data-en');
-        //     });
-        //     langLabel.textContent = isHindi ? 'हिंदी' : 'English';
-        // }
-
-         function updateSalaryLabel() {
-            const selectedText = bondSelect.options[bondSelect.selectedIndex]?.text.toLowerCase();
-            if (selectedText.includes('day')) {
-                salaryRangeLabel.innerHTML = "<b>Daily Salary Range</b>";
-                contractFieldLabel.innerHTML = "<b>For how many Days</b>";
-            } else if (selectedText.includes('month')) {
-                salaryRangeLabel.innerHTML = "<b>Monthly Salary Range</b>";
-                contractFieldLabel.innerHTML = "<b>For how many Months</b>";
-            }else {
-                salaryRangeLabel.innerHTML = "<b>Monthly Salary Range</b>"; 
-                contractFieldLabel.innerHTML = "<b>For how many Months</b>";// default
-            }
-        }
-
         jobTypeSelect.addEventListener('change', toggleBond);
-         bondSelect.addEventListener('change', updateSalaryLabel);
-
-        toggleBond();
-        updateSalaryLabel()
-
-        // langToggle.addEventListener('change', (e) => {
-        //     switchLanguage(e.target.checked);
-        // });
+        toggleBond(); // Initial call
     });
 </script>
 

@@ -17,9 +17,10 @@ class ShopOwnerController extends Controller
     public function home()
     {   
         $user = \Auth::user();
-        $job_data = EmployerJob::where('created_by' , $user->id)->where('is_delete' , 0)->get();
+        $job_data = EmployerJob::where('created_by' , $user->id)->get();
         return view('shop_owner.home',[
             'states' => State::all(),
+            'employers_bond' => EmployerBond::all(),
             'job_data' => $job_data
         ]);
     }
@@ -41,12 +42,14 @@ class ShopOwnerController extends Controller
     public function storeJob(Request $request)
     {
         $user = \Auth::user();
+        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'state' => 'required|integer',
             'city' => 'required|string|max:255',
             'address' => 'required|string|max:500',
             'type' => 'required|string|in:Full Time,Part Time,Contract',
+            'contract_period' => 'required|string',
             'gender' => 'required|string',
             'employer_bond' => 'nullable|required_if:type,Contract|integer',
             'salary_min' => 'nullable|integer|min:0',
@@ -59,15 +62,22 @@ class ShopOwnerController extends Controller
             'name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'food_allowance' => 'nullable|boolean',
+            'dinner' => 'nullable|boolean',
+            'stay' => 'nullable|boolean',
             'travel_allowance' => 'nullable|boolean',
         ]);
         
         $validated['created_by'] = $user->id;
-
+        $validated['food_allowance'] = isset($request->food_allowance) ? 1 : 0 ;
+        $validated['dinner'] =  isset($request->dinner) ? 1 : 0 ;
+        $validated['stay'] =  isset($request->stay) ? 1 : 0 ;
+        $validated['travel_allowance'] =  isset($request->travel_allowance) ? 1 : 0 ;
         // Store job logic here (e.g., Job::create($validated);)
-        
+       
         EmployerJob::updateOrCreate(['id' => $request->dataid],$validated);
-        return redirect()->route('shome')->with('message', 'Job posted successfully.');
+
+        
+        return redirect()->route('shome')->with('message', 'Job Created successfully.');
     }
 
     public function job_status(Request $request){
@@ -131,7 +141,7 @@ class ShopOwnerController extends Controller
         if($job){
             $job->is_delete = 1;
             $job->save();
-            return response()->json(['message' => 'Job deleted Successfully']);
+            return response()->json(['message' => 'Job Closed Successfully']);
         }
         return response()->json(['errors' =>'Wrong Input'], 400);
     }

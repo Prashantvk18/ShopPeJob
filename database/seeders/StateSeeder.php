@@ -18,6 +18,7 @@ class StateSeeder extends Seeder
             'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
             'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
         ];
+        
 
         foreach ($states as $state) {
             State::updateOrCreate(['name' => $state]);
