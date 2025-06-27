@@ -15,6 +15,8 @@ class EmployerJob extends Model
         'contract_period',
         'gender',
         'employer_bond',
+        'from_date',
+        'to_date',
         'salary_min',
         'salary_max',
         'description',

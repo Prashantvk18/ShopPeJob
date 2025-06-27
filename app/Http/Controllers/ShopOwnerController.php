@@ -52,6 +52,8 @@ class ShopOwnerController extends Controller
             'contract_period' => 'required|string',
             'gender' => 'required|string',
             'employer_bond' => 'nullable|required_if:type,Contract|integer',
+            'from_date' => 'nullable|required_if:type,Contract',
+            'to_date' => 'nullable|required_if:type,Contract',
             'salary_min' => 'nullable|integer|min:0',
             'salary_max' => 'nullable|integer|min:0',
             'description' => 'required|string',
