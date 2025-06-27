@@ -40,20 +40,19 @@ class ShopOwnerController extends Controller
         
     }
     public function storeJob(Request $request)
-    {
+    {   
         $user = \Auth::user();
-        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'state' => 'required|integer',
             'city' => 'required|string|max:255',
             'address' => 'required|string|max:500',
             'type' => 'required|string|in:Full Time,Part Time,Contract',
-            'contract_period' => 'required|string',
-            'gender' => 'required|string',
-            'employer_bond' => 'nullable|required_if:type,Contract|integer',
+            'contract_period' => 'nullable|required_if:type,Contract|string',
             'from_date' => 'nullable|required_if:type,Contract',
             'to_date' => 'nullable|required_if:type,Contract',
+            'employer_bond' => 'nullable|required_if:type,Contract|integer',
+            'gender' => 'required|string',
             'salary_min' => 'nullable|integer|min:0',
             'salary_max' => 'nullable|integer|min:0',
             'description' => 'required|string',
@@ -63,10 +62,7 @@ class ShopOwnerController extends Controller
             'company_name' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
-            'food_allowance' => 'nullable|boolean',
-            'dinner' => 'nullable|boolean',
-            'stay' => 'nullable|boolean',
-            'travel_allowance' => 'nullable|boolean',
+
         ]);
         
         $validated['created_by'] = $user->id;

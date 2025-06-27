@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('employer_jobs', function (Blueprint $table) {
-            $table->string('from_date')->after('employer_bond');
-            $table->string('to_date')->after('from_date');
+            $table->string('from_date')->nullable()->after('employer_bond');
+            $table->string('to_date')->nullable()->after('from_date');
         });
     }
 

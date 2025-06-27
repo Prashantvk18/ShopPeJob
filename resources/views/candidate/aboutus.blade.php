@@ -25,12 +25,12 @@
         }
 
         h2 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #333;
         }
 
         p {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #666;
             line-height: 1.6;
         }
@@ -85,12 +85,19 @@
         <section class="mission">
             <h2>Our Mission</h2>
             <p>
-                We are committed to bridging the gap between talented individuals and amazing companies. Our platform
-                provides an easy-to-use interface to find, apply, and manage job opportunities in a variety of industries.
+               Our mission is to connect hardworking individuals with job opportunities at local shops and businesses, especially those who may not have formal education or technical skills
             </p>
         </section>
 
-        <section class="team">
+        <section class="mission">
+            <h2>Why We Do It</h2>
+            <p>
+               Millions of people struggle to find work because they don’t have high education or online presence. At the same time, small shops are always in need of staff. We're here to bridge that gap — simply, quickly, and with heart.
+            </p>
+        </section>
+
+        
+        <!-- <section class="team">
             <h2>Meet Our Team</h2>
             <div class="teamMembers">
                 <div class="member">
@@ -112,7 +119,7 @@
                     <p>Michael oversees the technical aspects of our website, ensuring that it remains fast, secure, and user-friendly.</p>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <section class="contact">
             <h2>Contact Us</h2>

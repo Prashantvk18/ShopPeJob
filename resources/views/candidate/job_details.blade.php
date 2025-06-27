@@ -1,4 +1,20 @@
 @include('candidate.header')
+<?php
+$mobile = $job->phone_number; // Example number
+
+// Get first 2 digits
+$start = substr($mobile, 0, 2);
+
+// Get last 1 digit
+$end = substr($mobile, -1);
+
+// Get length of mobile number
+$length = strlen($mobile);
+
+// Replace middle digits with asterisks
+$masked = $start . str_repeat("*", $length - 3) . $end;
+
+?>
 
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
@@ -17,7 +33,7 @@
                         <i class="fa fa-map-marker text-danger me-2"></i>
                         &nbsp;<strong>Location:</strong>{{ $job->city }}, {{ $state[$job->state-1]['name'] }}
                         <br>
-                        &nbsp; &nbsp; &nbsp;{{$job->address}}
+                        <!-- &nbsp; &nbsp; &nbsp;{{$job->address}} -->
                     </p>
                     <p class="card-text mb-2">
                         @if($job->gender == 'Male')
@@ -75,7 +91,7 @@
                         </p>
                         <p class="mb-0">
                             <i class="fa fa-phone me-2 text-success"></i> 
-                            <strong>Phone:</strong> {{ $job->phone_number }}
+                            <strong>Phone:</strong> {{ $masked }}
                         </p>
                     </div>
                     @if($apl == 0)

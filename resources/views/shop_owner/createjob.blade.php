@@ -117,18 +117,18 @@
                             @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                         <!--Select date range for contract job type --->
-                        <div class="mb-3">
+                        <div class="mb-3" id="date_range" style="display: none;"    >
                             <div class="p-3 border rounded-3 shadow-sm">
-                                <label class="mb-3" class="form-label"  data-en="Location Details" data-hi="स्थान विवरण"><b>Select Date Range</b></label>
+                                <label class="mb-3" class="form-label" ><b>Select Date Range</b></label>
                                 <div class="d-flex justify-content-between">
-                                    <div class="col-md-6"  id="from_date" style="padding-left:0px; display: none;">
+                                    <div class="col-md-6"  style="padding-left:0px; ">
                                         <label for="from_date" class="form-label"><b>From date*</b></label>
-                                        <input type="date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date',$job_data->from_date ?? '') }}" required>
+                                        <input type="date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date',$job_data->from_date ?? '') }}" >
                                         @error('from_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
-                                    <div class="col-md-6"  id="to_date" style="padding-left:0px; display: none;">
+                                    <div class="col-md-6"  style="padding-left:0px;">
                                         <label for="to_date" class="form-label"><b>To date</b></label>
-                                        <input type="date" class="form-control @error('to_date') is-invalid @enderror" name="to_date" value="{{ old('to_date',$job_data->to_date ?? '') }}" required>
+                                        <input type="date" class="form-control @error('to_date') is-invalid @enderror" name="to_date" value="{{ old('to_date',$job_data->to_date ?? '') }}" >
                                         @error('to_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
@@ -266,8 +266,8 @@
         const jobTypeSelect = document.getElementById('job-type');
         const bondField = document.getElementById('employer-bond-field');
         const contractField = document.getElementById('contract-number');
-        const fromdateField = document.getElementById('from_date');
-        const todateField = document.getElementById('to_date');
+        const daterangeField = document.getElementById('date_range');
+       
         // const langToggle = document.getElementById('languageToggle');
         // const langLabel = document.getElementById('languageLabel');
         const bondSelect = document.querySelector('select[name="employer_bond"]');
@@ -278,8 +278,8 @@
         function toggleBond() {
             bondField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
             contractField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
-            fromdateField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
-            todateField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
+            daterangeField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
+            
         }
 
         // function switchLanguage(isHindi) {

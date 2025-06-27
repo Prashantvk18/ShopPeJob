@@ -112,7 +112,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="counter-box">
-          <h2 class="counter" data-target="1500">0</h2>
+          <h2 class="counter" data-target="1238">0</h2>
           <p>Jobs Posted</p>
         </div>
       </div>

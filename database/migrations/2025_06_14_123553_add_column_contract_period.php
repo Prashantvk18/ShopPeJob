@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('employer_jobs', function (Blueprint $table) {
-            $table->string('contract_period')->after('type');
+            $table->string('contract_period')->nullable()->after('type');
             $table->boolean('dinner')->default(false)->after('food_allowance');
             $table->boolean('stay')->default(false)->after('dinner');
         });
