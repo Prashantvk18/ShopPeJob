@@ -55,6 +55,7 @@
     $exp_array =["fresher" => "Fresher" , "lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
 
     $education = [
+        'uneducate' => 'Uneducate',
         'less_than_5th' => 'Less than 5th',
         'less_than_10th' => 'Less than 10th',
         '10th' => '10th',
@@ -160,9 +161,11 @@
                                 <select class="form-select @error('state') is-invalid @enderror" name="state" style="margin-bottom:20px; height:35px;">
                                     <option value="">Select State</option>
                                     @foreach($states as $state)
+                                    @if($state->id == 3)
                                     <option value="{{ $state->id }}" {{ old('state', $profile_data->state ?? '') == $state->id ? 'selected' : '' }}>
                                         {{ $state->name }}
                                     </option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 @error('state') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -174,9 +177,11 @@
                                         <option value="">Select City</option>
                                         {{-- You’ll need to dynamically populate based on selected state --}}
                                         @foreach($cities as $city)
+                                         @if($city->id == 16 || $city->id == 21 || $city->id == 26)
                                         <option value="{{ $city->name }}" {{ old('city',$profile_data->city ?? '') == $city->name ? 'selected' : '' }}>
                                             {{ $city->name }}
                                         </option>
+                                        @endif
                                         @endforeach
                                     </select>
                                     @error('city') 

@@ -29,7 +29,7 @@ class CandidateController extends Controller
     }
 
     public function job_details($id,$apl){
-        $job_data = EmployerJob::where('id' , $id)->where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->first();
+        $job_data = EmployerJob::where('id' , $id)->where('is_publish' , 1)->where('is_verified' , 1)->first();
         $employer_bond = EmployerBond::All();
         $employer_state = State::All();
         if($job_data){
@@ -154,7 +154,7 @@ class CandidateController extends Controller
     public function appliedjob(){
         $user = \Auth::user();
         $applied_job = JobApplied::where('user_id' , $user->id)->pluck('status' , 'job_id')->filter()->toArray();
-        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->whereIn('id' , array_keys($applied_job))->get();
+        $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->whereIn('id' , array_keys($applied_job))->get();
         return view('candidate.applied_job', [
             'states' => State::all(),
             'job_data' => $job_data,

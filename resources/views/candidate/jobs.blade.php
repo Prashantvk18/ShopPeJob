@@ -7,9 +7,11 @@
         <select class="form-select @error('state') is-invalid @enderror" name="state" style="height:35px;">
           <option value="">Select State</option>
           @foreach($states as $state)
+          @if($state->id == 3)
             <option value="{{ $state->id }}" {{ old('state', $profile_data->state ?? '') == $state->id ? 'selected' : '' }}>
               {{ $state->name }}
             </option>
+          @endif
           @endforeach
         </select>
         @error('state') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -20,9 +22,11 @@
         <select class="form-select @error('city') is-invalid @enderror" name="city" style="height:35px;">
           <option value="">Select City</option>
           @foreach($cities as $city)
+          @if($city->id == 16 || $city->id == 21 || $city->id == 26)
             <option value="{{ $city->name }}" {{ old('city', $profile_data->city ?? '') == $city->name ? 'selected' : '' }}>
               {{ $city->name }}
             </option>
+          @endif
           @endforeach
         </select>
         @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror

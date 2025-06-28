@@ -19,9 +19,9 @@
 
 
 <?php 
-    $exp_array =["lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
+    $exp_array =["fresher" => "Fresher" ,"lsix" => "Less than six month" , "msix" => "More than six month" , "year" => "1 Year" , "myear" => "More than one year"];
 
-    $education = ["fresher" => "Fresher" , 'less_than_5th' => 'Less than 5th' ,'less_than_10th' => 'Less than 10th','10th' => '10th','12th' => '12th',
+    $education = ['uneducate' => 'Uneducate', 'less_than_5th' => 'Less than 5th' ,'less_than_10th' => 'Less than 10th','10th' => '10th','12th' => '12th',
     ];
 ?>
 @php

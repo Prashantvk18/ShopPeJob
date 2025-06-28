@@ -1,11 +1,11 @@
 @include('shop_owner.header')
 <div class="container mt-5">
-    <!-- <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-end mb-3">
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="languageToggle">
             <label class="form-check-label" for="languageToggle" id="languageLabel">English</label>
         </div>
-    </div> -->
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -231,8 +231,11 @@
                         </div>
 
                         
-
-                        <button type="submit" class="btn btn-dark w-100">Submit</button>
+                       @if(isset($job_data->is_verified) && $job_data->is_verified == 1)
+                       
+                        @else
+                         <button type="submit" class="btn btn-dark w-100">Submit</button>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -246,8 +249,8 @@
         const jobTypeSelect = document.getElementById('job-type');
         const bondField = document.getElementById('employer-bond-field');
         const contractField = document.getElementById('contract-number');
-        // const langToggle = document.getElementById('languageToggle');
-        // const langLabel = document.getElementById('languageLabel');
+         const langToggle = document.getElementById('languageToggle');
+         const langLabel = document.getElementById('languageLabel');
         const bondSelect = document.querySelector('select[name="employer_bond"]');
         const salaryRangeLabel = document.getElementById('salary-range-label');
         const contractFieldLabel = document.getElementById('contract-numberLabel');
@@ -258,12 +261,12 @@
             contractField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
         }
 
-        // function switchLanguage(isHindi) {
-        //     document.querySelectorAll('[data-en]').forEach(el => {
-        //         el.textContent = isHindi ? el.getAttribute('data-hi') : el.getAttribute('data-en');
-        //     });
-        //     langLabel.textContent = isHindi ? 'हिंदी' : 'English';
-        // }
+        function switchLanguage(isHindi) {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = isHindi ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+            });
+            langLabel.textContent = isHindi ? 'हिंदी' : 'English';
+        }
 
          function updateSalaryLabel() {
             const selectedText = bondSelect.options[bondSelect.selectedIndex]?.text.toLowerCase();
@@ -285,9 +288,9 @@
         toggleBond();
         updateSalaryLabel()
 
-        // langToggle.addEventListener('change', (e) => {
-        //     switchLanguage(e.target.checked);
-        // });
+        langToggle.addEventListener('change', (e) => {
+            switchLanguage(e.target.checked);
+        });
     });
 </script>
 

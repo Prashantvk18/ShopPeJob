@@ -78,7 +78,9 @@ data-bs-interval="3000">
             </a>
           @endif
           
-          
+        @if($job->is_verified == 1)
+        <a href="/createjob/{{$job->id}}" class="text-decoration-none text-dark">
+        @endif
           <div class="card-body">
             <h5 class="card-title mb-3" style="font-size: 1.25rem; font-weight: 600;">
               <i class="fa fa-briefcase me-2 text-primary"></i> {{ $job->title }}
@@ -135,7 +137,11 @@ data-bs-interval="3000">
               </div>
             </div>
           </div>
+        @if($job->is_verified == 1)
+        </a>
+        @endif
         </div>
+
       </div>
     @endforeach
   </div>
