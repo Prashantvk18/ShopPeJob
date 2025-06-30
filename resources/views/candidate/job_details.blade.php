@@ -12,7 +12,11 @@ $end = substr($mobile, -1);
 $length = strlen($mobile);
 
 // Replace middle digits with asterisks
-$masked = $start . str_repeat("*", $length - 3) . $end;
+$masked = $start . str_repeat("*", $length - 3) . $end; 
+if($status == 'S'){
+   $masked =$job->phone_number;
+}
+
 
 ?>
 
@@ -100,10 +104,10 @@ $masked = $start . str_repeat("*", $length - 3) . $end;
                         <input type="text" style="display:none" value="2" name="job">
                         <button class="btn btn-dark mt-auto w-100" type="submit" name="jobid" value="{{$job->id}}">
                             Apply Job
-                        </a>
+                        </button>
                     @elseif($apl == 1)
                         <p class="btn btn-dark mt-auto w-100" disabled>
-                            Applied 
+                           @if($job->is_delete) Job Closed @else Applied @endif  
                         </p>
                     </form>
                     @endif

@@ -13,9 +13,17 @@
                     <h4>Employer Form</h4>
                 </div>
                 <div class="card-body">
-
                     
-
+                    <div class="d-flex justify-content-end mb-3">
+        <form method="GET" action="{{ route('change.language') }}">
+            <?php app()->setLocale(session('locale')); ?>
+            <select name="lang" onchange="this.form.submit()" class="form-select w-auto">
+                <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>English</option>
+                <option value="hi" {{ app()->getLocale() == 'hi' ? 'selected' : '' }}>हिंदी</option>
+                <option value="mr" {{ app()->getLocale() == 'mr' ? 'selected' : '' }}>मराठी</option>
+            </select>
+        </form>
+    </div>
                     @if(session('message'))
                     <div class="alert {{ str_contains(session('message'), 'successfully') ? 'alert-success' : 'alert-danger' }}">
                         {{ session('message') }}
@@ -30,7 +38,7 @@
 
                         {{-- Job Title --}}
                         <div class="mb-3">
-                            <label for="title" class="form-label" data-en="Job Title" data-hi="नौकरी का शीर्षक"><b>Job Title</b></label>
+                            <label for="title" class="form-label" data-en="Job Title" data-hi="नौकरी का शीर्षक"><b>{{ __('form.job_title') }}</b></label>
                             <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title',$job_data->title ?? '') }}">
                             @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -38,12 +46,12 @@
                         {{-- Location Details --}}
                         <div class="mb-3">
                             <div class="p-3 border rounded-3 shadow-sm">
-                                <label class="mb-3" class="form-label"  data-en="Location Details" data-hi="स्थान विवरण"><b>Location Details</b></label>
+                                <label class="mb-3" class="form-label"  data-en="Location Details" data-hi="स्थान विवरण"><b>{{ __('form.location_details') }}</b></label>
 
                                 <div class="d-flex justify-content-between">
                                     {{-- State --}}
                                     <div class="flex-fill mb-3 me-2">
-                                        <label for="state" class="form-label"><b>State</b></label>
+                                        <label for="state" class="form-label"><b>{{ __('form.state') }}</b></label>
                                         <select class="form-select @error('state') is-invalid @enderror" name="state">
                                             <option value="">Select State</option>
                                             @foreach($states as $state)
@@ -59,7 +67,7 @@
 
                                     {{-- City --}}
                                     <div class="flex-fill mb-3">
-                                        <label for="city" class="form-label"><b>City</b></label>
+                                        <label for="city" class="form-label"><b>{{ __('form.city') }}</b></label>
                                         <select class="form-select @error('city') is-invalid @enderror" name="city">
                                             <option value="">Select City</option>
                                             {{-- You’ll need to dynamically populate based on selected state --}}
@@ -77,7 +85,7 @@
 
                                 {{-- Address --}}
                                 <div class="mb-3">
-                                    <label for="address" class="form-label"><b>Address</b></label>
+                                    <label for="address" class="form-label"><b>{{ __('form.address') }}</b></label>
                                     <textarea class="form-control @error('address') is-invalid @enderror" name="address">{{ old('address',$job_data->address ?? '') }}</textarea>
                                     @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
@@ -86,7 +94,7 @@
 
                         {{-- Job Type --}}
                         <div class="mb-3">
-                            <label for="type" class="form-label"><b>Job Type</b></label>
+                            <label for="type" class="form-label"><b>{{ __('form.job_type') }}</b></label>
                             <select class="form-select @error('type') is-invalid @enderror" name="type" id="job-type">
                                 <option value="">Select Job Type</option>
                                 <option value="Full Time" {{ old('type', $job_data->type ?? '') == 'Full Time' ? 'selected' : '' }}>Full Time</option>
@@ -98,7 +106,7 @@
 
                         {{-- Contract Bond (conditionally shown) --}}
                         <div class="mb-3" id="employer-bond-field" style="display: none;">
-                            <label for="employer_bond" class="form-label"><b>Employer Contract type</b></label>
+                            <label for="employer_bond" class="form-label"><b>{{ __('form.employer_contract_type')}}</b></label>
                             <select class="form-select @error('employer_bond') is-invalid @enderror" name="employer_bond">
                                 <option value="">Select Type</option>
                                 @foreach($employers_bond as $bond)
@@ -137,7 +145,7 @@
                         <!---select date range end-->
                         {{-- Salary Range - You may need to use JS range slider --}}
                         <div class="mb-3">
-                            <label id="salary-range-label" class="form-label"><b>Monthly Salary Range</b></label>
+                            <label id="salary-range-label" class="form-label"><b>{{ __('form.salary_range')}}</b></label>
                             <input type="number" name="salary_min" placeholder="Min" class="form-control mb-2" value="{{ old('salary_min',    $job_data->salary_min ?? '') }}">
                             <input type="number" name="salary_max" placeholder="Max" class="form-control" value="{{ old('salary_max',    $job_data->salary_max ?? '') }}">
                             @error('salary_range') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
@@ -145,7 +153,7 @@
                         
                         {{-- Job Description --}}
                         <div class="mb-3">
-                            <label for="description" class="form-label"><b>Job Description</b></label>
+                            <label for="description" class="form-label"><b>{{ __('form.job_description')}}</b></label>
                             <textarea class="form-control @error('description') is-invalid @enderror" name="description">{{ old('description',    $job_data->description ?? '') }}</textarea>
                             @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -153,7 +161,7 @@
                         {{-- Working Hours --}}
                         <div class="mb-3">
                             <div class="p-3 border rounded-3 shadow-sm">
-                                <h5 class="mb-3">Working Hours</h5>
+                                <h5 class="mb-3">{{ __('form.working_hours')}}</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="start_time" class="form-label"><b>Start Time</b></label>
@@ -171,7 +179,7 @@
 
                         {{-- Job Category --}}
                         <div class="mb-3">
-                            <label for="job_category" class="form-label"><b>Job Category</b></label>
+                            <label for="job_category" class="form-label"><b>{{ __('form.job_category')}}</b></label>
                             <select class="form-select @error('job_category') is-invalid @enderror" name="job_category">
                                 <option value="">Select Job Category</option>
                                 @foreach($jobCategories as $category)
@@ -184,7 +192,7 @@
                         </div>
                         {{-- Gender --}}
                         <div class="mb-3">
-                                <label for="gender" class="form-label"><b>Gender Required*</b></label>
+                                <label for="gender" class="form-label"><b>{{ __('form.gender')}}</b></label>
                                 <select class="form-select @error('gender') is-invalid @enderror" name="gender" required style="margin-bottom:20px; height:35px;">
                                     <option value="">Select Gender</option>
                                     <option value="Male" {{ old('gender', $job_data->gender ?? '') == 'Male' ? 'selected' : '' }}>Male</option>
@@ -197,7 +205,7 @@
                         {{--Facilities provide--}}
                         <div class="mb-3">
                             <div class="p-3 border rounded-3 shadow-sm">
-                                <h5 class="mb-3">Facilities Provide</h5>
+                                <h5 class="mb-3">{{ __('form.facilities')}}</h5>
                                 <div class="row">
                                     <div class="col-md-3">
                                 <div class="form-check">
@@ -229,20 +237,20 @@
                         {{-- Company Information --}}
                         <div class="mb-3">
                             <div class="p-3 border rounded-3 shadow-sm">
-                                <h5 class="mb-3">Shop Information</h5>
+                                <h5 class="mb-3">{{ __('form.company_info')}}</h5>
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
-                                        <label for="company_name" class="form-label"><b>Shop Name</b></label>
+                                        <label for="company_name" class="form-label"><b>{{ __('form.shop_name')}}</b></label>
                                         <input type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name',    $job_data->company_name ?? '') }}">
                                         @error('company_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="name" class="form-label"><b>Owner Name</b></label>
+                                        <label for="name" class="form-label"><b>{{ __('form.owner_name')}}</b></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name',  $job_data->name ?? '') }}">
                                         @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="phone_number" class="form-label"><b>Phone Number</b></label>
+                                        <label for="phone_number" class="form-label"><b>{{ __('form.phone_number')}}</b></label>
                                         <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number',    $job_data->phone_number ?? '') }}">
                                         @error('phone_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
@@ -292,14 +300,14 @@
          function updateSalaryLabel() {
             const selectedText = bondSelect.options[bondSelect.selectedIndex]?.text.toLowerCase();
             if (selectedText.includes('day')) {
-                salaryRangeLabel.innerHTML = "<b>Daily Salary Range</b>";
-                contractFieldLabel.innerHTML = "<b>For how many Days</b>";
+                salaryRangeLabel.innerHTML = "<b>{{ __('form.days_salary') }}</b>";
+                contractFieldLabel.innerHTML = "<b>{{ __('form.for_days') }}</b>";
             } else if (selectedText.includes('month')) {
-                salaryRangeLabel.innerHTML = "<b>Monthly Salary Range</b>";
-                contractFieldLabel.innerHTML = "<b>For how many Months</b>";
+                salaryRangeLabel.innerHTML = "<b>{{ __('form.months_salary') }}</b>";
+                contractFieldLabel.innerHTML = "<b>{{ __('form.for_months') }}</b>";
             }else {
-                salaryRangeLabel.innerHTML = "<b>Monthly Salary Range</b>"; 
-                contractFieldLabel.innerHTML = "<b>For how many Months</b>";// default
+                salaryRangeLabel.innerHTML = "<b>{{ __('form.salary_range') }}</b>"; 
+                contractFieldLabel.innerHTML = "<b>{{ __('form.for_months') }}</b>";// default
             }
         }
 
