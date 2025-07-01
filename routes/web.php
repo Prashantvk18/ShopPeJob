@@ -19,6 +19,12 @@ Route::get('/logout',[AuthenticationController::class,'logout'])->name('logout')
 Route::group(['middleware' => 'checkedloggedin'],function() {
     require __DIR__ . '/web_routes/candidate_routes.php'; 
     require __DIR__ . '/web_routes/shopowner_routes.php'; 
+
+    Route::get('/change-language', function (\Illuminate\Http\Request $request) {
+        session(['locale' => $request->lang]);
+        app()->setLocale($request->lang);
+        return redirect()->back();
+    })->name('change.language');
 });
 
 

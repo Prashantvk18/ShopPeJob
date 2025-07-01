@@ -31,14 +31,24 @@ class CandidateController extends Controller
             ]);
     }
 
+    
     public function job_details($id,$apl){
-        $job_data = EmployerJob::where('id' , $id)->where('is_publish' , 1)->where('is_verified' , 1)->first();
+        $user = \Auth::user();
+        $job_applied = JobApplied::where('user_id' , $user->id)->where('job_id' , $id)->first();
+        $status = '';
+        if($job_applied){
+            $job_data = EmployerJob::where('id' , $id)->where('is_publish' , 1)->where('is_verified' , 1)->first();
+            $status = $job_applied->status;
+        }else{
+            $job_data = EmployerJob::where('id' , $id)->where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->first();
+        }
         $employer_bond = EmployerBond::All();
         $employer_state = State::All();
         if($job_data){
             return view('candidate.job_details',[
                 'apl' => $apl,
                 'job' => $job_data ,
+                'status' => $status,
                 'employer_bond' => $employer_bond ,
                 'state' => $employer_state]);
         }
@@ -113,11 +123,13 @@ class CandidateController extends Controller
             $imageName = time() . '_' .$request->first_name.'.'.$image->getClientOriginalExtension();
             // Save the file to public/storage/profile_photos
             $image->move(public_path('storage/profile_photos'), $imageName);
+           
+           
         }
-       $candidate = CandidateProfile::updateOrCreate(
-            ['user_id' => $user->id],
+        
+       $candidate_array =
             ['user_id' => $user->id,
-             'img_path' =>'profile_photos/' . $imageName,
+            //  'img_path' =>'profile_photos/' . $imageName,
              'first_name' => $request->first_name,
              'middle_name' => $request->middle_name,
              'last_name' => $request->last_name,
@@ -133,8 +145,16 @@ class CandidateController extends Controller
              'looking_job' => $request->looking_job,
              'is_active' => $request->is_deleted ?? 0,
              'is_verify' => $request->is_verify ?? 0,
-        ]);
-        return redirect()->route('profilecreate')->with('message', 'Profile Updated successfully.');
+        ];
+         if($request->hasFile('photo')) {
+          $candidate_array['img_path'] = 'profile_photos/' . $imageName;
+        }
+      
+        $candidate = CandidateProfile::updateOrCreate(
+             ['user_id' => $user->id],$candidate_array
+        );
+     
+       return redirect()->route('profilecreate')->with('message', 'Profile Updated successfully.');
     }
 
     public function jobapply(Request $request){
@@ -158,6 +178,7 @@ class CandidateController extends Controller
         $user = \Auth::user();
         $applied_job = JobApplied::where('user_id' , $user->id)->pluck('status' , 'job_id')->filter()->toArray();
         $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->whereIn('id' , array_keys($applied_job))->get();
+        $employer_bond = EmployerBond::All();
         return view('candidate.applied_job', [
             'states' => State::all(),
             'job_data' => $job_data,

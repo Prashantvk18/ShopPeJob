@@ -56,7 +56,7 @@
                             @csrf
                         <input type="text" style="display:none" value="1" name="job">
                         <p class="btn btn-dark mt-auto w-100" disabled>
-                            Applied 
+                            @if($job->is_delete) Job Closed @else Applied @endif 
                         </p>
                         </form>
                     </div>
