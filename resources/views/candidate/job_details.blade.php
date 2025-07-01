@@ -1,4 +1,20 @@
 @include('candidate.header')
+<?php
+$mobile = $job->phone_number; // Example number
+
+// Get first 2 digits
+$start = substr($mobile, 0, 2);
+
+// Get last 1 digit
+$end = substr($mobile, -1);
+
+// Get length of mobile number
+$length = strlen($mobile);
+
+// Replace middle digits with asterisks
+$masked = $start . str_repeat("*", $length - 3) . $end;
+
+?>
 
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
@@ -17,7 +33,7 @@
                         <i class="fa fa-map-marker text-danger me-2"></i>
                         &nbsp;<strong>Location:</strong>{{ $job->city }}, {{ $state[$job->state-1]['name'] }}
                         <br>
-                        &nbsp; &nbsp; &nbsp;{{$job->address}}
+                        <!-- &nbsp; &nbsp; &nbsp;{{$job->address}} -->
                     </p>
                     <p class="card-text mb-2">
                         @if($job->gender == 'Male')
@@ -36,15 +52,19 @@
                         {{ \Carbon\Carbon::parse($job->end_time)->format('h:i A') }}
                     </p>
                     <p class="card-text mb-3">
-                        <i class="fa fa-inr text-success me-2"></i>&nbsp;
-                        <strong>Salary:</strong> ₹{{ $job->salary_min }} - ₹{{ $job->salary_max }}/month
-                    </p>
-
-                    <p class="card-text mb-3">
                         <i class="fa fa-briefcase text-info me-2"></i>
-                        <strong>Job Type:</strong>{{ $job->type }} @if($job->type == 'Contract') &nbsp;&nbsp; <strong>Bond:</strong>{{ $employer_bond[$job->employer_bond-1]['bond_duration'] }}  Bond is there @endif
+                        <strong>Job Type:</strong>{{ $job->type }} @if($job->type == 'Contract') &nbsp;&nbsp; <strong>Contract:</strong> Required for {{$job->contract_period}} {{ $employer_bond[$job->employer_bond-1]['salary_type'] }} only  @endif
                     </p>
-
+                    @if($job->type == 'Contract')
+                    <p class="card-text mb-3">
+                        <i class="fa fa-calendar-o text-primary me-2"></i>
+                        <strong>Date Range: </strong> {{ $job->from_date }} - {{ $job->to_date }} 
+                    </p>
+                    @endif
+                    <p class="card-text mb-3">
+                        <i class="fa fa-inr text-success me-2"></i>&nbsp;
+                        <strong>Salary:</strong> ₹{{ $job->salary_min }} - ₹{{ $job->salary_max }} / @if($job->type == 'Contract'){{ $employer_bond[$job->employer_bond-1]['salary_type'] }} @else Month @endif
+                    </p>
                     <p class="card-text mb-4">
                         <i class="fa fa-align-left text-muted me-2"></i>
                         <strong>Description:</strong> <br>
@@ -55,7 +75,9 @@
                     <p class="card-text mb-4">
                         <strong>Facility:</strong>
                         @if($job->food_allowance)Food Allowance,@endif
-                        @if($job->travel_allowance)Travelling Allowance
+                        @if($job->travel_allowance)Travelling Allowance, @endif
+                        @if($job->dinner)Dinner Allowance, @endif
+                        @if($job->stay)Stay Allowance
                         @endif
                     </p>
                     <div class="border rounded-3 p-3 bg-light">
@@ -69,7 +91,7 @@
                         </p>
                         <p class="mb-0">
                             <i class="fa fa-phone me-2 text-success"></i> 
-                            <strong>Phone:</strong> {{ $job->phone_number }}
+                            <strong>Phone:</strong> {{ $masked }}
                         </p>
                     </div>
                     @if($apl == 0)

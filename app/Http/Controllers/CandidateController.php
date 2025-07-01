@@ -22,9 +22,12 @@ class CandidateController extends Controller
         $user = \Auth::user();
         $applied_job = JobApplied::where('user_id' , $user->id)->pluck('job_id')->filter()->toArray();
         $job_data = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->whereNotIn('id' , $applied_job)->get();
+        $total_job_count = EmployerJob::where('is_publish' , 1)->where('is_verified' , 1)->where('is_delete' , 0)->count();
+
         return view('candidate.home',[
              'states' => State::all(),
-             'job_data' => $job_data
+             'job_data' => $job_data,
+             'job_count' => $total_job_count
             ]);
     }
 
@@ -158,6 +161,7 @@ class CandidateController extends Controller
         return view('candidate.applied_job', [
             'states' => State::all(),
             'job_data' => $job_data,
+            'employer_bond' => $employer_bond ,
             'applied_user_status' => $applied_job
         ]);
     }

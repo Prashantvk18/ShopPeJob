@@ -48,7 +48,7 @@
                         </p>
                         <p class="card-text">
                         <i class="fa fa-inr text-success me-2"></i>
-                        <strong>Salary:</strong> ₹{{ $job->salary_min }} - ₹{{ $job->salary_max }}/month
+                        <strong>Salary:</strong> ₹{{ $job->salary_min }} - ₹{{ $job->salary_max }} /@if($job->type == 'Contract'){{ $employer_bond[$job->employer_bond-1]['salary_type'] }} @else Month @endif
                         </p>
                         <br>
                         <!-- Apply Now Button -->

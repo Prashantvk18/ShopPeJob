@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('employer_jobs', function (Blueprint $table) {
-            $table->string('contract_period')->nullable()->after('type');
-            $table->boolean('dinner')->default(false)->after('food_allowance');
-            $table->boolean('stay')->default(false)->after('dinner');
+            $table->string('from_date')->nullable()->after('employer_bond');
+            $table->string('to_date')->nullable()->after('from_date');
         });
     }
 
@@ -24,9 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('employer_jobs', function (Blueprint $table) {
-             $table->dropColumn('contract_period');  
-             $table->dropColumn('dinner');  
-             $table->dropColumn('contract_stayperiod');  
+            $table->dropColumn('from_date');
+            $table->dropColumn('to_date');
         });
     }
 };

@@ -109,12 +109,32 @@
                             </select>
                             @error('employer_bond') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
+                        
                         {{--To enter numbers of days , month ,year --}}
                         <div class="mb-3" id="contract-number" style="display: none;">
                             <label id="contract-numberLabel"for="contract_period" class="form-label"><b>Enter Contract Period</b></label>
                             <input placeholder="eg for 10 days/months/year" type="number" class="form-control @error('contract_period') is-invalid @enderror" name="contract_period" value="{{ old('contract_period',$job_data->contract_period ?? '') }}">
                             @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
+                        <!--Select date range for contract job type --->
+                        <div class="mb-3" id="date_range" style="display: none;"    >
+                            <div class="p-3 border rounded-3 shadow-sm">
+                                <label class="mb-3" class="form-label" ><b>Select Date Range</b></label>
+                                <div class="d-flex justify-content-between">
+                                    <div class="col-md-6"  style="padding-left:0px; ">
+                                        <label for="from_date" class="form-label"><b>From date*</b></label>
+                                        <input type="date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date',$job_data->from_date ?? '') }}" >
+                                        @error('from_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                    <div class="col-md-6"  style="padding-left:0px;">
+                                        <label for="to_date" class="form-label"><b>To date</b></label>
+                                        <input type="date" class="form-control @error('to_date') is-invalid @enderror" name="to_date" value="{{ old('to_date',$job_data->to_date ?? '') }}" >
+                                        @error('to_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!---select date range end-->
                         {{-- Salary Range - You may need to use JS range slider --}}
                         <div class="mb-3">
                             <label id="salary-range-label" class="form-label"><b>Monthly Salary Range</b></label>
@@ -122,7 +142,7 @@
                             <input type="number" name="salary_max" placeholder="Max" class="form-control" value="{{ old('salary_max',    $job_data->salary_max ?? '') }}">
                             @error('salary_range') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                         </div>
-
+                        
                         {{-- Job Description --}}
                         <div class="mb-3">
                             <label for="description" class="form-label"><b>Job Description</b></label>
@@ -249,6 +269,8 @@
         const jobTypeSelect = document.getElementById('job-type');
         const bondField = document.getElementById('employer-bond-field');
         const contractField = document.getElementById('contract-number');
+        const daterangeField = document.getElementById('date_range');
+       
          const langToggle = document.getElementById('languageToggle');
          const langLabel = document.getElementById('languageLabel');
         const bondSelect = document.querySelector('select[name="employer_bond"]');
@@ -261,12 +283,12 @@
             contractField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
         }
 
-        function switchLanguage(isHindi) {
-            document.querySelectorAll('[data-en]').forEach(el => {
-                el.textContent = isHindi ? el.getAttribute('data-hi') : el.getAttribute('data-en');
-            });
-            langLabel.textContent = isHindi ? 'हिंदी' : 'English';
-        }
+        // function switchLanguage(isHindi) {
+        //     document.querySelectorAll('[data-en]').forEach(el => {
+        //         el.textContent = isHindi ? el.getAttribute('data-hi') : el.getAttribute('data-en');
+        //     });
+        //     langLabel.textContent = isHindi ? 'हिंदी' : 'English';
+        // }
 
          function updateSalaryLabel() {
             const selectedText = bondSelect.options[bondSelect.selectedIndex]?.text.toLowerCase();

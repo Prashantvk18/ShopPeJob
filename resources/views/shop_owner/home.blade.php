@@ -17,8 +17,21 @@
 .card:hover {
   transform: scale(1.02);
 }
+ .counter-section {
+  background-color: #f8f9fa;
+}
 
+.counter-box {
+  padding: 20px;
+}
+
+.counter {
+  font-size: 48px;
+  font-weight: bold;
+  color:rgb(0, 0, 0);
+}
 </style>
+
 <div id="mainCarousel" class="carousel slide mt-0" data-bs-ride="carousel"
 data-bs-interval="3000">
   <div class="carousel-inner">
@@ -146,7 +159,30 @@ data-bs-interval="3000">
     @endforeach
   </div>
 </div>
-
+<section class="counter-section text-center py-5 bg-light"  style="margin-top:10px">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="counter-box">
+          <h2 class="counter" data-target="1500">0</h2>
+          <p>Jobs Posted</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="counter-box">
+          <h2 class="counter" data-target="850">0</h2>
+          <p>Employees Hired</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="counter-box">
+          <h2 class="counter" data-target="2300">0</h2>
+          <p>Users Registered</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <script>
   function updateJobStatus(id , status){
     let result = confirm("Once you publish then you can not edit it");
@@ -199,5 +235,25 @@ data-bs-interval="3000">
       location.reload(true);
     }
   }
+
+const counters = document.querySelectorAll('.counter');
+
+counters.forEach(counter => {
+  const updateCount = () => {
+    const target = +counter.getAttribute('data-target');
+    const count = +counter.innerText;
+
+    const increment = target / 200; // speed of animation
+
+    if (count < target) {
+      counter.innerText = Math.ceil(count + increment);
+      setTimeout(updateCount, 10);
+    } else {
+      counter.innerText = target;
+    }
+  };
+
+  updateCount();
+});
 </script>
 @include('shop_owner.footer')
