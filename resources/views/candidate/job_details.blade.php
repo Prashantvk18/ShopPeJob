@@ -15,6 +15,7 @@ $length = strlen($mobile);
 $masked = $start . str_repeat("*", $length - 3) . $end; 
 if($status == 'S'){
    $masked =$job->phone_number;
+   
 }
 
 

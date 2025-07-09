@@ -10,7 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication</title>
 </head>
@@ -32,15 +33,18 @@
                     @csrf
                     <div class="form-group">
                         <label for="mobile" class="font-weight-bold">Mobile No.</label>
-                        <input type="text" name="mobile" class="form-control" value="{{ old('mobile') }}">
+                        <input type="text" id="phone"   name="mobile" class="form-control" value="{{ old('mobile') }}">
                         @error('mobile')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                        <a href="/login">Send OTP</a>
+
+                        <div id="recaptcha-container"></div>
+                        <button type="button" onclick="sendOTP()" class="btn btn-dark btn-block mt-4">Send OTP</button>
+                        <!---<a href="/login">Send OTP</a>--->
                     </div>
-                    <div class="form-group">
-                        <label for="otp" class="font-weight-bold">OTP:</label>
-                        <input type="otp" name="otp" class="form-control">
+                    <div class="form-group mt-4">
+                        <!-- <label for="otp" class="font-weight-bold">OTP:</label> -->
+                        <input  type="text" id="otp" placeholder="Enter OTP" name="otp" class="form-control">
                         @error('otp')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -51,9 +55,8 @@
                         <div class="g-recaptcha" data-sitekey="your-site-key-here"></div>
                     </div> 
                     -->
-
                     <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-dark btn-block">Log In</button>
+                        <button type="button" onclick="verifyOTP()" class="btn btn-dark btn-block">Log In</button>
                     </div>
                 </form>
 
@@ -181,4 +184,65 @@ if(intval($responseKeys["success"]) !== 1) {
 
 
 </body>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyACJO0MoD3HAoR2yigQhqnvFxaPB3VYXRc",
+        authDomain: "spj-otp.firebaseapp.com",
+        projectId: "spj-otp",
+        storageBucket: "spj-otp.appspot.com",
+        messagingSenderId: "402552345502",
+        appId: "1:402552345502:web:5acb55812506d9002f3c8f",
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    let confirmationResult;
+
+    // ✅ Only initialize once
+    window.onload = function () {
+        if (!window.recaptchaVerifier) {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                size: 'invisible',
+                callback: function (response) {
+                    console.log("reCAPTCHA solved");
+                }
+            });
+            window.recaptchaVerifier.render().then(function (widgetId) {
+                window.recaptchaWidgetId = widgetId;
+            });
+        }
+    };
+
+    function sendOTP() {
+        const phone = document.getElementById("phone").value;
+
+        const appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(phone, appVerifier)
+            .then((result) => {
+                confirmationResult = result;
+                alert("OTP sent");
+            })
+            .catch((error) => {
+                console.error("OTP send error:", error);
+                alert("Error: " + error.message);
+            });
+    }
+
+    function verifyOTP() {
+        const code = document.getElementById("otp").value;
+
+        confirmationResult.confirm(code)
+            .then((result) => {
+                const user = result.user;
+                console.log("Verified user:", user.phoneNumber);
+                // Proceed to your Laravel backend if needed
+            })
+            .catch((error) => {
+                alert("Invalid OTP");
+                console.error(error);
+            });
+    }
+</script>
+
+
 </html>
