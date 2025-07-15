@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="{{ asset('bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" rel="stylesheet">  
+    
+
+    <link href="{{ asset('bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    
     <script src="{{ asset('bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js') }}"></script>
+
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,6 +17,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication</title>
 </head>
@@ -57,12 +62,12 @@
                         <input type="checkbox" id="privacyPolicy" name="privacyPolicy" onchange="toggleSubmitButton()">
                        
                         <label for="privacyPolicy">
-                            I agree to the  <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#privacyModal">
+                            I agree to the  <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#privacyModal" style="padding-top: 4px;padding-left: 0px;">
                                 Privacy Policy
                             </button>
                         </label><br><br>
                     </div>
-                    <div class="form-group mt-4">
+                    <div class="form-group">
                         <button id="submitBtn" type="button" onclick="verifyOTP()" class="btn btn-dark btn-block" disabled>Log In</button>
                     </div>
                 </form>
@@ -87,7 +92,7 @@
         <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      @include('authentication.privacy_policy')
+     
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
       </div>
@@ -95,18 +100,25 @@
   </div>
 </div> -->
 
-<div id="privacyModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg"> <!-- Modal size adjusted for mobile -->
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-body" id="form_data">
-                @include('authentication.privacy_policy')
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+<div id="privacyModal" class="modal fade" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
+        <div class="modal-body" >
+            @include('authentication.privacy_policy')
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
     </div>
+  </div>
 </div>
 
 <style>

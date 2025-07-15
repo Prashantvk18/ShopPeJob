@@ -63,11 +63,11 @@ class AuthenticationController extends Controller
          } else {
             // User is not active
             \Auth::logout();  // Optionally log out the user
-            return redirect('/')->withError('Inactive User');
+            return response()->json(['message' => 'Inactive User', 'redirect' => '/']);
          }
       
 
-      return redirect('/')->withError('Invalid Credential');
+         return response()->json(['message' => 'Invalid Credential', 'redirect' => '/']);
    }
 
    public function logout()
