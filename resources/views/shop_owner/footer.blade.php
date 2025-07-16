@@ -60,12 +60,55 @@ footer {
 <br><br>
 </div>
 <footer>
-        <footer>
-            <div class="footer-content">
-                <p>Developed by <strong>Virat Kohli</strong></p>
-                <p>Contact: <a href="mailto:prashantjainvk18@gmail.com">prashantjainvk18@gmail.com</a></p>
-            </div>
-        </footer>
+<footer class="bg-dark text-white pt-4 pb-3">
+  <div class="container">
+    <div class="row gy-4">
+
+      <!-- Column 1: Logo / Description -->
+      <div class="col-12 col-md-3">
+        <h5>YourBrand</h5>
+        <p class="small">Helping you grow through smarter design and technology.</p>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="col-6 col-md-3">
+        <h6>Quick Links</h6>
+        <ul class="list-unstyled">
+          <li><a href="/about" class="text-white text-decoration-none">About Us</a></li>
+          <li><a href="/services" class="text-white text-decoration-none">Services</a></li>
+          <li><a href="/contact" class="text-white text-decoration-none">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Legal -->
+      <div class="col-6 col-md-3">
+        <h6>Legal</h6>
+        <ul class="list-unstyled">
+          <li><a href="/privacy" class="text-white text-decoration-none">Privacy Policy</a></li>
+          <li><a href="/terms" class="text-white text-decoration-none">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter + Social -->
+      <div class="col-12 col-md-3">
+        <h6>Subscribe</h6>
+        <form class="d-flex flex-column flex-sm-row gap-2">
+          <input type="email" class="form-control" placeholder="Email">
+          <button type="submit" class="btn btn-primary btn-sm">Go</button>
+        </form>
+        <div class="mt-3">
+          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="mt-4 border-light">
+    <p class="text-center small mb-0">&copy; 2025 YourBrand. All rights reserved.</p>
+  </div>
+</footer>
    
 </footer>
 

@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
     <link href="{{ asset('bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" rel="stylesheet">
     
     <script src="{{ asset('bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js') }}"></script>
+
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication</title>
 </head>
@@ -22,32 +28,29 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-md-4">
-            <div class="card shadow-lg border-0 rounded p-4">
+            <div class="card shadow-lg border-0 rounded p-3">
                 <h3 class="text-center mb-4 text-dark">Login</h3>
                 <!-- @if (Session::has('error'))
                     <div class="alert alert-danger text-center">
                         {{ Session::get('error') }}
                     </div>
                 @endif -->
-                <form action="{{ url('/') }}" method="post">
+                <span id="success_msg" class="text-success"></span>
+                <form  id="taskForm">
                     @csrf
                     <div class="form-group">
                         <label for="mobile" class="font-weight-bold">Mobile No.</label>
                         <input type="text" id="phone"   name="mobile" class="form-control" value="{{ old('mobile') }}">
-                        @error('mobile')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <span id="error-mobile" class="text-danger"></span>
 
-                        <div id="recaptcha-container"></div>
+                        <div id="recaptcha_container"></div>
                         <button type="button" onclick="sendOTP()" class="btn btn-dark btn-block mt-4">Send OTP</button>
                         <!---<a href="/login">Send OTP</a>--->
                     </div>
                     <div class="form-group mt-4">
                         <!-- <label for="otp" class="font-weight-bold">OTP:</label> -->
                         <input  type="text" id="otp" placeholder="Enter OTP" name="otp" class="form-control">
-                        @error('otp')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <span id="error_otp" class="text-danger"></span>
                     </div>
                     <!-- Google reCAPTCHA (optional) -->
                     <!-- 
@@ -56,7 +59,16 @@
                     </div> 
                     -->
                     <div class="form-group mt-4">
-                        <button type="button" onclick="verifyOTP()" class="btn btn-dark btn-block">Log In</button>
+                        <input type="checkbox" id="privacyPolicy" name="privacyPolicy" onchange="toggleSubmitButton()">
+                       
+                        <label for="privacyPolicy">
+                            I agree to the <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#privacyModal" style="padding-top: 4px;padding-left: 0px;">
+                                Privacy Policy
+                            </button>
+                        </label><br><br>
+                    </div>
+                    <div class="form-group">
+                        <button id="submitBtn" type="button" onclick="verifyOTP()" class="btn btn-dark btn-block" disabled>Log In</button>
                     </div>
                 </form>
 
@@ -66,6 +78,47 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-sm"> 
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div id="privacyModal" class="modal fade" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body" >
+            @include('authentication.privacy_policy')
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+  </div>
 </div>
 
 <style>
@@ -109,6 +162,14 @@
 </style>
 
 </div>
+<script>
+    function toggleSubmitButton() {
+      var checkbox = document.getElementById("privacyPolicy");
+      var submitBtn = document.getElementById("submitBtn");
+
+      submitBtn.disabled = !checkbox.checked;
+    }
+  </script>
 <!---6Lfno6gpAAAAAJE5hI6UPLo-5GcR0Q6vYnyG54Zn secret key
 
 
@@ -196,52 +257,81 @@ if(intval($responseKeys["success"]) !== 1) {
     };
     firebase.initializeApp(firebaseConfig);
 
-    let confirmationResult;
+    async function render() {
+  if (!window.recaptchaVerifier) {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha_container', {
+      size: 'invisible',
+      callback: function(response) {
+        console.log('reCAPTCHA solved:', response);
+      }
+    });
 
-    // ✅ Only initialize once
-    window.onload = function () {
-        if (!window.recaptchaVerifier) {
-            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                size: 'invisible',
-                callback: function (response) {
-                    console.log("reCAPTCHA solved");
-                }
-            });
-            window.recaptchaVerifier.render().then(function (widgetId) {
-                window.recaptchaWidgetId = widgetId;
-            });
-        }
-    };
-
+    // Wait for the widget to render and store its ID (optional)
+    window.recaptchaWidgetId = await window.recaptchaVerifier.render();
+    console.log('reCAPTCHA rendered, widget ID:', window.recaptchaWidgetId);
+  }
+}
+   
+    $(document).ready(async function() {
+        await render(); // important: wait until reCAPTCHA is ready
+    });
     function sendOTP() {
-        const phone = document.getElementById("phone").value;
-
-        const appVerifier = window.recaptchaVerifier;
-        firebase.auth().signInWithPhoneNumber(phone, appVerifier)
-            .then((result) => {
-                confirmationResult = result;
-                alert("OTP sent");
-            })
-            .catch((error) => {
-                console.error("OTP send error:", error);
-                alert("Error: " + error.message);
-            });
+        const number = "+91" + $("#phone").val();
+        firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
+        .then(function (confirmationResult) {
+        window.confirmationResult = confirmationResult;
+        console.log("OTP sent:", confirmationResult);
+        alert("OTP sent successfully!");
+        })
+        .catch(function (error) {
+        console.error("OTP error:", error);
+        $('#error_otp').text(error.message);
+        $("#error_otp").show();
+        });
     }
-
-    function verifyOTP() {
-        const code = document.getElementById("otp").value;
-
-        confirmationResult.confirm(code)
-            .then((result) => {
-                const user = result.user;
-                console.log("Verified user:", user.phoneNumber);
-                // Proceed to your Laravel backend if needed
-            })
-            .catch((error) => {
-                alert("Invalid OTP");
-                console.error(error);
-            });
-    }
+        function verifyOTP() {
+            var code = $("#otp").val();
+            if(code.length){
+                if (typeof  confirmationResult == 'undefined'){
+                    $('#error_otp').html('The OTP has not been generated');
+                    $("#error_otp").show();
+                    return false;
+                }
+               confirmationResult.confirm(code).then(function(result){
+                    //var user = result.user;
+                    var formData = $('#taskForm').serialize();
+                  
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type:'post',
+                        url:"{{ url('/') }}",
+                        data:formData,
+                        success: function(response) {
+                            //console.log(response.message);
+                            $("#taskForm").css('display', 'none');
+                            document.getElementById("success_msg").innerHTML = response.message;
+                            setTimeout(function() {
+                                window.location.href = response.redirect;
+                            }, 3000);
+                        },
+                        error: function(error) {
+                        console.log(error);
+                            Object.keys(error.responseJSON.errors).forEach(field => {
+                                console.log(field);
+                                const errorMessage = error.responseJSON.errors[field][0];
+                                console.log(errorMessage);
+                                document.getElementById('error-' + field).innerHTML = errorMessage;
+                        });
+                        }
+                    });
+                }).catch(function(error){
+                    $('#error_otp').text(error.message);
+                    $("#error_otp").show();
+                });
+            }
+        }
 </script>
 
 

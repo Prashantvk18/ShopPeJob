@@ -54,15 +54,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                <li class="nav-item {{ request()->is('home') ? 'active' : '' }}">
+                    <a class="nav-link" aria-current="page" href="/home">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->is('jobs') ? 'active' : '' }}">
                     <a class="nav-link" href="/jobs">Job</a>
                 </li>
                
                 @if(Session::get('is_loggedIn'))
-                    <li class="nav-item">
+                    <li class="nav-item {{ request()->is('appliedjob') ? 'active' : '' }}">
                         <a class="nav-link" href="/appliedjob">Applied Job</a>
                     </li>
                 @endif
@@ -79,11 +79,11 @@
                     </ul>
                 </li>  -->
                 
-                <li class="nav-item">
+                <li class="nav-item {{ request()->is('profilecreate') ? 'active' : '' }}">
                     <a class="nav-link" href="/profilecreate">Profile</a>
                 </li>
                 
-                <li class="nav-item">
+                <li class="nav-item  {{ request()->is('about_us') ? 'active' : '' }}">
                     <a class="nav-link" href="/about_us">About Us</a>
                 </li>
                 @if(Session::get('is_loggedIn'))

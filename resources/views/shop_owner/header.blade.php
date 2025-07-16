@@ -47,6 +47,7 @@
 </head>
 <body> 
 <div class="content">
+
 <nav class="navbar navbar-expand-lg navbar-dark  shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand fs-3 fw-bold" href="#">SpJ</a>
@@ -55,13 +56,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/shome">Home</a>
+                <li class="nav-item {{ request()->is('shome') ? 'active' : '' }}">
+                    <a class="nav-link " aria-current="page" href="/shome">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->is('createjob*') ? 'active' : '' }}">
                     <a class="nav-link" href="/createjob/0">Create Job</a>
                 </li>
-                <!-- <li class="nav-item">
+                <!-- <li class="nav-item {{ request()->is('applieduser') ? 'active' : '' }}">
                     <a class="nav-link" href="/applieduser">Applied User</a>
                 </li> -->
                 <!-- Dropdown Menu -->
@@ -76,7 +77,7 @@
                         <li><a class="dropdown-item" href="/trip_roadmap">Road Map</a></li>
                     </ul>
                 </li>  -->
-                <li class="nav-item">
+                <li class="nav-item {{ request()->is('sabout_us') ? 'active' : '' }}">
                     <a class="nav-link" href="/sabout_us">About Us</a>
                 </li>
                 <li class="nav-item">
@@ -151,4 +152,14 @@
     }
 </style>
 
+<script>
+const navItems = document.querySelectorAll('.nav-item');
+
+navItems.forEach(item => {
+  item.addEventListener('click', function () {
+    navItems.forEach(el => el.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
 

@@ -59,15 +59,15 @@ class AuthenticationController extends Controller
          if ($user->is_active == 1) {
             Session::put('is_loggedIn', 1);
             Session::put('is_admin', $user->is_admin);
-            return redirect('/');
+            return response()->json(['message' => 'User LoggedIn Successfully', 'redirect' => '/']);
          } else {
             // User is not active
             \Auth::logout();  // Optionally log out the user
-            return redirect('/')->withError('Inactive User');
+            return response()->json(['message' => 'Inactive User', 'redirect' => '/']);
          }
       
 
-      return redirect('/')->withError('Invalid Credential');
+         return response()->json(['message' => 'Invalid Credential', 'redirect' => '/']);
    }
 
    public function logout()

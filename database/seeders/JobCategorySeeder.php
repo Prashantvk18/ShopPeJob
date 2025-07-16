@@ -12,6 +12,7 @@ class JobCategorySeeder extends Seeder
         // Modify or add job categories        
         // Array of local jobs
         $localJobs = [
+            "Any",
             "Electrician",
             "Staff Boy",
             "General Store",
