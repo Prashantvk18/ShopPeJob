@@ -57,6 +57,9 @@
         {{ session('message') }}
     </div>
   @endif
+  @if(count($job_data) == 0)
+        <p>No Data Found !!</p>
+  @endif
     @foreach($job_data as $job)
       <div class="col-md-4">
       <a href="{{ route('job_details',[ $job->id , 0]) }}" class="text-decoration-none text-dark">
