@@ -28,7 +28,7 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-md-4">
-            <div class="card shadow-lg border-0 rounded p-4">
+            <div class="card shadow-lg border-0 rounded p-3">
                 <h3 class="text-center mb-4 text-dark">Login</h3>
                 <!-- @if (Session::has('error'))
                     <div class="alert alert-danger text-center">
@@ -62,7 +62,7 @@
                         <input type="checkbox" id="privacyPolicy" name="privacyPolicy" onchange="toggleSubmitButton()">
                        
                         <label for="privacyPolicy">
-                            I agree to the  <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#privacyModal" style="padding-top: 4px;padding-left: 0px;">
+                            I agree to the <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#privacyModal" style="padding-top: 4px;padding-left: 0px;">
                                 Privacy Policy
                             </button>
                         </label><br><br>

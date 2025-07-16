@@ -1,11 +1,11 @@
 @include('shop_owner.header')
 <div class="container mt-5">
-    <div class="d-flex justify-content-end mb-3">
+    <!-- <div class="d-flex justify-content-end mb-3">
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="languageToggle">
             <label class="form-check-label" for="languageToggle" id="languageLabel">English</label>
         </div>
-    </div>
+    </div> -->
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -289,6 +289,7 @@
         function toggleBond() {
             bondField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
             contractField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
+            daterangeField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
         }
 
         // function switchLanguage(isHindi) {
