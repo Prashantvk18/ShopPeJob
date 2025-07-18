@@ -16,7 +16,10 @@ Route::controller(ShopOwnerController::class)->group(function () {
     Route::get('/sprivacy_policy', function () {
         return view('shop_owner.privacy_policy');
     });
-    Route::get('/services', function () {
+    Route::get('/sterms_ofservice', function () {
+        return view('shop_owner.terms_ofservice');
+    });
+    Route::get('/sservices', function () {
         return view('shop_owner.services');
     });
 });

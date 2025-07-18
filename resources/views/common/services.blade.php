@@ -1,6 +1,6 @@
 
 
-@section('content')
+
 <div class="container my-5">
     <h4 class="mb-3">Services</h4>
     <p>
@@ -16,4 +16,3 @@
         <strong>Note:</strong> We do not guarantee job placement or employment. Acceptance or rejection of job applications is solely at the discretion of the job providers.
     </p>
 </div>
-@endsection

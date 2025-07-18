@@ -44,7 +44,7 @@
                         <span id="error-mobile" class="text-danger"></span>
 
                         <div id="recaptcha_container"></div>
-                        <button type="button" onclick="sendOTP()" class="btn btn-dark btn-block mt-4">Send OTP</button>
+                        <button id="send_otp" type="button" onclick="sendOTP()" class="btn btn-dark btn-block mt-4">Send OTP</button>
                         <!---<a href="/login">Send OTP</a>--->
                     </div>
                     <div class="form-group mt-4">
@@ -276,6 +276,7 @@ if(intval($responseKeys["success"]) !== 1) {
         await render(); // important: wait until reCAPTCHA is ready
     });
     function sendOTP() {
+        $("#send_otp").prop("disabled" , true);
         const number = "+91" + $("#phone").val();
         firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
         .then(function (confirmationResult) {

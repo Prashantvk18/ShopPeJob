@@ -74,8 +74,8 @@ footer {
       <div class="col-6 col-md-3">
         <h6>Quick Links</h6>
         <ul class="list-unstyled">
-          <li><a href="/about" class="text-white text-decoration-none">About Us</a></li>
-          <li><a href="/services" class="text-white text-decoration-none">Services</a></li>
+          <li><a href="/sabout_us" class="text-white text-decoration-none">About Us</a></li>
+          <li><a href="/sservices" class="text-white text-decoration-none">Services</a></li>
           <li><a href="/contact" class="text-white text-decoration-none">Contact</a></li>
         </ul>
       </div>
@@ -85,7 +85,7 @@ footer {
         <h6>Legal</h6>
         <ul class="list-unstyled">
           <li><a href="/sprivacy_policy" class="text-white text-decoration-none">Privacy Policy</a></li>
-          <li><a href="/sterms_ofservices" class="text-white text-decoration-none">Terms of Service</a></li>
+          <li><a href="/sterms_ofservice" class="text-white text-decoration-none">Terms of Service</a></li>
         </ul>
       </div>
 

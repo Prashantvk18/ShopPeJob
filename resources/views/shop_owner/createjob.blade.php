@@ -284,12 +284,14 @@
         const bondSelect = document.querySelector('select[name="employer_bond"]');
         const salaryRangeLabel = document.getElementById('salary-range-label');
         const contractFieldLabel = document.getElementById('contract-numberLabel');
+        const dateRangeFieldLabel = document.getElementById('date_range');
         
 
         function toggleBond() {
             bondField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
             contractField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
             daterangeField.style.display = jobTypeSelect.value === 'Contract' ? 'block' : 'none';
+             
         }
 
         // function switchLanguage(isHindi) {
