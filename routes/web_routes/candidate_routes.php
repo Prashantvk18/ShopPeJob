@@ -20,4 +20,7 @@ Route::controller(CandidateController::class)->group(function(){
     Route::get('/services', function () {
         return view('candidate.services');
     });
+    Route::get('/contact', function () {
+        return view('candidate.contact');
+    });
 });

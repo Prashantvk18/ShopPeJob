@@ -22,4 +22,7 @@ Route::controller(ShopOwnerController::class)->group(function () {
     Route::get('/sservices', function () {
         return view('shop_owner.services');
     });
+    Route::get('/scontact', function () {
+        return view('shop_owner.contact');
+    });
 });

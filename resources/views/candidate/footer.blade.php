@@ -77,7 +77,7 @@ footer {
         <ul class="list-unstyled">
           <li><a href="/about_us" class="text-white text-decoration-none">About Us</a></li>
           <li><a href="/services" class="text-white text-decoration-none">Services</a></li>
-          <li><a href="/contact" class="text-white text-decoration-none">Contact</a></li>
+          <!-- <li><a href="/contact" class="text-white text-decoration-none">Contact</a></li> -->
         </ul>
       </div>
 
