@@ -84,8 +84,8 @@ footer {
       <div class="col-6 col-md-3">
         <h6>Legal</h6>
         <ul class="list-unstyled">
-          <li><a href="/privacy" class="text-white text-decoration-none">Privacy Policy</a></li>
-          <li><a href="/terms" class="text-white text-decoration-none">Terms of Service</a></li>
+          <li><a href="/sprivacy_policy" class="text-white text-decoration-none">Privacy Policy</a></li>
+          <li><a href="/sterms_ofservices" class="text-white text-decoration-none">Terms of Service</a></li>
         </ul>
       </div>
 
