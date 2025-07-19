@@ -159,10 +159,12 @@ class CandidateController extends Controller
 
     public function jobapply(Request $request){
         $user = \Auth::user();
-        $profile_data = CandidateProfile::where('mobile_no' , $user->number)->first();
-        if(!$profile_data){
+        $profile_data = CandidateProfile::where('user_id' , $user->id)->first();
+        if(!$profile_data || $profile_data->img_path == ''){
             return redirect()->route('profilecreate')->with('message', 'First Create your profile');
         }
+        
+        return redirect()->route('profilecreate')->with('message', 'All Create your profile');
         $applied_job = new JobApplied();
         $applied_job->user_id = $user->id;
         $applied_job->job_id = $request->jobid;

@@ -96,6 +96,7 @@
                             <strong>Phone:</strong>
                             <span class="ms-2">{{$user_data->mobile_no }}</span>
                         </p>
+                        @if($apply_job_id->status != 'S')
                         <div class="mb-3">
                             <form id="job_status">
                                 @csrf
@@ -108,6 +109,7 @@
                                 </div>
                             </form>
                         </div>
+                        @endif
                         <hr>
                     </div>
                     
@@ -118,8 +120,10 @@
 </div>
 <script>
     function update_status(status) {
+        let result = confirm("Once you accept then you can not change it");
         var jobid = $("#jobid").val();
         event.preventDefault();
+        if(result){
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
@@ -138,6 +142,7 @@
                location.reload();
             }
         });
+        }
     }
 </script>
 @include('shop_owner.footer')

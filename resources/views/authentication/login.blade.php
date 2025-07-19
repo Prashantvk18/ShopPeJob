@@ -80,26 +80,6 @@
     </div>
 </div>
 
-
-<!-- Button trigger modal -->
-
-
-<!-- Modal -->
-<!-- <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-sm"> 
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-     
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div id="privacyModal" class="modal fade" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
