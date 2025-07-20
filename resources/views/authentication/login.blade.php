@@ -24,6 +24,17 @@
 
 <body>
 
+<div id="otpLoader"
+     class="d-none position-fixed top-0 start-0 w-100 vh-100 bg-white bg-opacity-75 d-flex justify-content-center align-items-center flex-column"
+     style="z-index: 1050;">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">wait...</span>
+  </div>
+  <div class="mt-3 text-dark fw-bold">Wait...</div>
+</div>
+
+
+
 <div class="container">
 <div class="container">
     <div class="row justify-content-center mt-5">
@@ -256,21 +267,26 @@ if(intval($responseKeys["success"]) !== 1) {
         await render(); // important: wait until reCAPTCHA is ready
     });
     function sendOTP() {
-        $("#send_otp").prop("disabled" , true);
+        document.getElementById('otpLoader').classList.remove('d-none');
+        
+        // $("#send_otp").prop("disabled" , true);
         const number = "+91" + $("#phone").val();
         firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
         .then(function (confirmationResult) {
         window.confirmationResult = confirmationResult;
         console.log("OTP sent:", confirmationResult);
+        document.getElementById('otpLoader').classList.add('d-none');
         alert("OTP sent successfully!");
         })
         .catch(function (error) {
         console.error("OTP error:", error);
+        document.getElementById('otpLoader').classList.add('d-none');
         $('#error_otp').text(error.message);
         $("#error_otp").show();
         });
     }
         function verifyOTP() {
+            document.getElementById('otpLoader').classList.remove('d-none');
             var code = $("#otp").val();
             if(code.length){
                 if (typeof  confirmationResult == 'undefined'){
@@ -291,6 +307,7 @@ if(intval($responseKeys["success"]) !== 1) {
                         data:formData,
                         success: function(response) {
                             //console.log(response.message);
+                            document.getElementById('otpLoader').classList.add('d-none');
                             $("#taskForm").css('display', 'none');
                             document.getElementById("success_msg").innerHTML = response.message;
                             setTimeout(function() {
@@ -299,6 +316,7 @@ if(intval($responseKeys["success"]) !== 1) {
                         },
                         error: function(error) {
                         console.log(error);
+                        document.getElementById('otpLoader').classList.add('d-none');
                             Object.keys(error.responseJSON.errors).forEach(field => {
                                 console.log(field);
                                 const errorMessage = error.responseJSON.errors[field][0];
