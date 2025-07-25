@@ -99,9 +99,38 @@
         </div>
     </div>
 </nav>
+<button id="backBtn" onclick="history.back()">← Back</button>
 
 <!-- Additional Styles -->
 <style>
+    /* Back button styles */
+       
+#backBtn {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  background-color: #0e0e0eff;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+#backBtn:hover {
+  background-color: #444546ff;
+}
+
+/* Show on mobile devices (max width 768px) */
+@media (max-width: 768px) {
+  #backBtn {
+    display: block;
+  }
+}
     /* Navbar improvements */   
     .navbar {
         background-color: black !important;

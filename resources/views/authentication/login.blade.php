@@ -274,9 +274,9 @@ if(intval($responseKeys["success"]) !== 1) {
         firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
         .then(function (confirmationResult) {
         window.confirmationResult = confirmationResult;
-        console.log("OTP sent:", confirmationResult);
         document.getElementById('otpLoader').classList.add('d-none');
         alert("OTP sent successfully!");
+         $("#send_otp").prop("disabled" , true);
         })
         .catch(function (error) {
         console.error("OTP error:", error);

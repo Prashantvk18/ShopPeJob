@@ -158,8 +158,8 @@ data-bs-interval="3000">
       </div>
     @endforeach
   </div>
-</div>
-<section class="counter-section text-center py-5 bg-light"  style="margin-top:10px">
+
+<section class="counter-section text-center py-5 bg-light" style="margin-top: 10px; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #ddd;">
   <div class="container">
     <div class="row">
       <div class="col-md-4">
@@ -183,6 +183,7 @@ data-bs-interval="3000">
     </div>
   </div>
 </section>
+</div>
 <script>
   function updateJobStatus(id , status){
     let result = confirm("Once you publish then you can not edit it");
