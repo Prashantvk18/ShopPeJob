@@ -13,6 +13,10 @@ Route::controller(ShopOwnerController::class)->group(function () {
     Route::post('/job_delete', 'job_delete')->name('job_delete');
     Route::post('/user_jobstatus', 'user_jobstatus')->name('user_jobstatus');
     Route::get('/sabout_us','about_us')->name('about_us');
+    Route::get('/sverify_shop','verify')->name('verify');
+    Route::post('/admin/jobs/verify-reject/single/{id}','verifyRejectSingle')->name('admin.jobs.verify.reject.single');
+    Route::post('/admin/jobs/verify-reject/bulk', 'verifyRejectBulk')->name('admin.jobs.verify.bulk');
+
     Route::get('/sprivacy_policy', function () {
         return view('shop_owner.privacy_policy');
     });

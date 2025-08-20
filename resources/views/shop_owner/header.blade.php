@@ -80,6 +80,11 @@
                 <li class="nav-item {{ request()->is('sabout_us') ? 'active' : '' }}">
                     <a class="nav-link" href="/sabout_us">About Us</a>
                 </li>
+                @if(Auth::user()->is_admin == 1)
+                    <li class="nav-item {{ request()->is('sverify_shop') ? 'active' : '' }}">
+                        <a class="nav-link" href="/sverify_shop">Verify Shop</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>

@@ -24,6 +24,54 @@ class ShopOwnerController extends Controller
             'job_data' => $job_data
         ]);
     }
+    public function verify(){
+        $user = \Auth::user();
+        $job_data = EmployerJob::where('created_by' , $user->id)->where('is_delete' , 0)->get();
+        return view('admin.shop_verify',[
+            'states' => State::all(),
+            'employers_bond' => EmployerBond::all(),
+            'job_data' => $job_data
+        ]);
+    }
+
+   public function verifyRejectSingle(Request $request, $id)
+{
+    $job = EmployerJob::findOrFail($id);
+
+    if ($request->input('action_type') === 'verify') {
+        $job->is_verified = 1;
+    } elseif ($request->input('action_type') === 'reject') {
+        $job->is_verified = 0;
+    }
+
+    $job->verified_by = auth()->id();
+    $job->save();
+
+    return redirect()->back()->with('success', 'Job updated successfully.');
+}
+
+public function verifyRejectBulk(Request $request)
+{
+    $ids = explode(',', $request->input('job_ids'));
+    $action = $request->input('action_type');
+
+    $update = [
+        'verified_by' => auth()->id()
+    ];
+
+    if ($action === 'verify') {
+        $update['is_verified'] = 1;
+    } elseif ($action === 'reject') {
+        $update['is_verified'] = 0;
+       
+    }
+
+    EmployerJob::whereIn('id', $ids)->update($update);
+
+    return redirect()->back()->with('success', 'Selected jobs updated successfully.');
+}
+
+
     public function createjob($id)
     {    $user = \Auth::user();
         $job_data = EmployerJob::where('id' , $id)->where('created_by' , $user->id)->first();

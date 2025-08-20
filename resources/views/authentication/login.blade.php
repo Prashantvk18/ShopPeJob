@@ -270,6 +270,12 @@ if(intval($responseKeys["success"]) !== 1) {
         document.getElementById('otpLoader').classList.remove('d-none');
         
         // $("#send_otp").prop("disabled" , true);
+        if($("#phone").val().length != 10){
+            document.getElementById('otpLoader').classList.add('d-none');
+            $('#error-mobile').text("Please enter valid mobile number");
+            $("#error-mobile").show();
+            return false;
+        }
         const number = "+91" + $("#phone").val();
         firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier)
         .then(function (confirmationResult) {
@@ -290,6 +296,7 @@ if(intval($responseKeys["success"]) !== 1) {
             var code = $("#otp").val();
             if(code.length){
                 if (typeof  confirmationResult == 'undefined'){
+                    document.getElementById('otpLoader').classList.add('d-none');
                     document.getElementById('otpLoader').classList.add('d-none');
                     $('#error_otp').html('The OTP has not been generated');
                     $("#error_otp").show();
@@ -328,10 +335,15 @@ if(intval($responseKeys["success"]) !== 1) {
                     });
                 }).catch(function(error){
                     document.getElementById('otpLoader').classList.add('d-none');
+                document.getElementById('otpLoader').classList.add('d-none');
                     $('#error_otp').text(error.message);
                     $("#error_otp").show();
                 });
+            }else{
+                document.getElementById('otpLoader').classList.add('d-none');
+                $('#error_otp').text("Please enter correct OTP");
             }
+            
         }
 </script>
 

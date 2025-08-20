@@ -91,16 +91,16 @@ footer {
 
       <!-- Column 4: Newsletter + Social -->
       <div class="col-12 col-md-3">
-        <h6>Subscribe</h6>
+        <!-- <h6>Subscribe</h6>
         <form class="d-flex flex-column flex-sm-row gap-2">
           <input type="email" class="form-control" placeholder="Email">
           <button type="submit" class="btn btn-primary btn-sm">Go</button>
-        </form>
-        <div class="mt-3">
+        </form> -->
+        <!-- <div class="mt-3">
           <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
           <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
-        </div>
+        </div> -->
       </div>
 
     </div>
