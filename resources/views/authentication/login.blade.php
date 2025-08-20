@@ -290,6 +290,7 @@ if(intval($responseKeys["success"]) !== 1) {
             var code = $("#otp").val();
             if(code.length){
                 if (typeof  confirmationResult == 'undefined'){
+                    document.getElementById('otpLoader').classList.add('d-none');
                     $('#error_otp').html('The OTP has not been generated');
                     $("#error_otp").show();
                     return false;
@@ -326,6 +327,7 @@ if(intval($responseKeys["success"]) !== 1) {
                         }
                     });
                 }).catch(function(error){
+                    document.getElementById('otpLoader').classList.add('d-none');
                     $('#error_otp').text(error.message);
                     $("#error_otp").show();
                 });
