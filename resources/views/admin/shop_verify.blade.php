@@ -32,17 +32,14 @@
                             <td>{{ $job->is_publish ? 'Yes' : 'No' }}</td>
                             <td>{{ $job->is_verified ? 'Verified' : 'Unverified' }}</td>
                             <td>
-                                <form method="POST" action="{{ route('admin.jobs.verify.reject.single', $job->id) }}" class="d-inline">
-                                    @csrf
-                                    <input type="hidden" name="action_type" value="verify">
-                                    <button type="submit" class="btn btn-success btn-sm">Verify</button>
-                                </form>
-
-                                <form method="POST" action="{{ route('admin.jobs.verify.reject.single', $job->id) }}" class="d-inline">
-                                    @csrf
-                                    <input type="hidden" name="action_type" value="reject">
-                                    <button type="submit" class="btn btn-danger btn-sm">Unverify</button>
-                                </form>
+                                <button type="button" class="btn btn-success btn-sm"
+                                onclick="submitSingleAction('{{ $job->id }}', 'verify')">
+                                Verify
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                onclick="submitSingleAction('{{ $job->id }}', 'reject')">
+                                Unverify
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -59,6 +56,11 @@
                 <button type="submit" class="btn btn-danger" id="bulk-reject-btn" disabled onclick="submitBulkAction('reject')">Unverify Selected</button>
             </div>
         </form>
+        <form id="single-action-form" method="POST" style="display: none;">
+            @csrf
+            <input type="hidden" name="action_type" id="single-action-type">
+        </form>
+
     </div>
 </div>
 
@@ -104,6 +106,13 @@
             form.action = `{{ route('admin.jobs.verify.bulk') }}`;
         };
     });
+
+    function submitSingleAction(jobId, actionType) {
+        const form = document.getElementById('single-action-form');
+        form.action = `/admin/jobs/verify-reject/single/${jobId}`;
+        document.getElementById('single-action-type').value = actionType;
+        form.submit();
+    }
 </script>
 
 @include('shop_owner.footer')
